@@ -1,0 +1,2 @@
+export const GET_PROJECT_NAME = 'GET_PROJECT_NAME'
+export const SET_PROJECT_NAME = 'SET_PROJECT_NAME'

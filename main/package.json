@@ -1,0 +1,17 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "author": "Edvin Havic <edvinhavic@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "electron": "electron src",
+    "start": "cross-env NODE_ENV=dev nodemon --watch ./src/**/* --watch . --exec 'yarn electron'"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "electron": "^4.0.6",
+    "electron-devtools-installer": "^2.2.4",
+    "nodemon": "^1.18.10"
+  }
+}
