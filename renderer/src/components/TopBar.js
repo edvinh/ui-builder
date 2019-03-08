@@ -9,10 +9,9 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
 
+import styled from 'styled-components'
+
 const styles = theme => ({
-  root: {
-    width: '100%',
-  },
   grow: {
     flexGrow: 1,
   },
@@ -59,19 +58,28 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 10,
     transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200,
-      },
+    width: 120,
+    '&:focus': {
+      width: 200,
     },
   },
 })
 
-const TopBar = ({ classes }) => (
-  <div className={classes.root}>
-    <AppBar position="static" color="default">
+const StyledAppBar = styled(AppBar)`
+  && {
+    width: calc(100% - ${props => props.leftOffset}px);
+  }
+`
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`
+
+const TopBar = ({ classes, leftOffset }) => (
+  <Wrapper>
+    <StyledAppBar position="static" color="default" leftOffset={leftOffset}>
       <Toolbar variant="dense">
         <Typography variant="h6">UI Builder</Typography>
 
@@ -89,12 +97,17 @@ const TopBar = ({ classes }) => (
           />
         </div>
       </Toolbar>
-    </AppBar>
-  </div>
+    </StyledAppBar>
+  </Wrapper>
 )
 
 TopBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  leftOffset: PropTypes.number.isRequired,
+}
+
+TopBar.defaultProps = {
+  leftOffset: 0,
 }
 
 export default withStyles(styles)(TopBar)

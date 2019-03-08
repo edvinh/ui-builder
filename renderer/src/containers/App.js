@@ -13,20 +13,55 @@ import {
   ListSubheader,
   Menu,
   MenuItem,
+  withStyles,
 } from '@material-ui/core'
 import FolderIcon from '@material-ui/icons/Folder'
 import ViewIcon from '@material-ui/icons/ViewCompact'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import styled from 'styled-components'
 import * as projectActions from '../actions/projectActions'
+import ViewToggleButtonGroup from '../components/ViewToggleButtonGroup'
+import TopBar from '../components/TopBar'
+import MobileView from '../components/MobileView'
 
 const StyledDrawer = styled(props => <Drawer {...props} classes={{ paper: 'paper' }} />)`
   & .paper {
-    width: 20%;
+    min-width: 100%;
+    /*
     min-width: 200px;
     max-width: 350px;
+    margin-right: 20%; */
     top: 50px; /* hack: AppBar height */
   }
+`
+
+const drawerWidth = 250
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+  },
+})
+
+const StyledWrapper = styled.div`
+  margin-left: ${drawerWidth}px;
 `
 
 const StyledListSubheader = styled(ListSubheader)`
@@ -53,8 +88,17 @@ const App = (props) => {
   }
 
   return (
-    <div>
-      <StyledDrawer variant="persistent" anchor="left" open>
+    <StyledWrapper>
+      <TopBar />
+      <Drawer
+        className={props.classes.drawer}
+        classes={{
+          paper: props.classes.drawerPaper,
+        }}
+        variant="permanent"
+        anchor="left"
+        open
+      >
         <Menu
           onClose={() => setOpenMenu({ anchorEl: null, open: false })}
           anchorEl={openMenu.anchorEl}
@@ -86,8 +130,10 @@ const App = (props) => {
             </ListItem>
           ))}
         </List>
-      </StyledDrawer>
-    </div>
+      </Drawer>
+      <ViewToggleButtonGroup />
+      <MobileView />
+    </StyledWrapper>
   )
 }
 
@@ -110,4 +156,4 @@ App.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)(withStyles(styles)(App))
