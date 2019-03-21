@@ -3,6 +3,7 @@ import * as types from '../constants/types'
 const initialState = {
   name: 'Untitled',
   views: [],
+  platformView: 'mobile',
 }
 
 export default function projectReducer (state = initialState, action) {
@@ -24,6 +25,12 @@ export default function projectReducer (state = initialState, action) {
       const newViews = state.views.filter(v => v.id === action.payload)
       return { ...state, views: newViews }
     }
+
+    case types.SWITCH_PLATFORM_VIEW:
+      return {
+        ...state,
+        platformView: action.payload,
+      }
 
     default:
       return state

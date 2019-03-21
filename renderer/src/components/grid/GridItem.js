@@ -7,9 +7,7 @@ const StyledWrapper = styled.div`
   box-sizing: content-box;
   width: inherit;
   height: inherit;
-  border: ${props => (props.focus ? '1px solid blue' : 'none')};
-  margin-left: ${props => (props.focus ? -1 : 0)}px;
-  margin-top: ${props => (props.focus ? -1 : 0)}px;
+  border: ${props => (props.focus ? '1px solid #447cd6' : '1px solid transparent')};
   overflow: hidden;
 `
 
@@ -18,18 +16,32 @@ class GridItem extends Component {
     focus: false,
   }
 
-  onClick = () => {
+  onClick = (evt) => {
     this.setState({ focus: true })
+
+    // Right click
+    if (evt.type === 'contextmenu') {
+      this.props.onRightClick(this.props.id, evt)
+    } else {
+      this.props.onClick(this.props.id)
+    }
   }
 
   onClickAway = () => {
     this.setState({ focus: false })
+    this.props.onClickAway(this.props.id)
   }
 
   render () {
+    const { onClickAway, onRightClick, ...rest } = this.props
     return (
       <ClickAwayListener onClickAway={this.onClickAway}>
-        <StyledWrapper {...this.props} focus={this.state.focus} onClick={this.onClick} />
+        <StyledWrapper
+          {...rest}
+          focus={this.state.focus}
+          onClick={this.onClick}
+          onContextMenu={this.onClick}
+        />
       </ClickAwayListener>
     )
   }
@@ -37,7 +49,17 @@ class GridItem extends Component {
 
 GridItem.propTypes = {
   key: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
+  onClick: PropTypes.func,
+  onRightClick: PropTypes.func,
+  onClickAway: PropTypes.func,
+}
+
+GridItem.defaultProps = {
+  onClickAway: () => {},
+  onRightClick: () => {},
+  onClick: () => {},
 }
 
 export default GridItem

@@ -34,3 +34,10 @@ export function deleteView (viewId) {
     payload: viewId,
   }
 }
+
+export function switchPlatformView (platformView) {
+  return {
+    type: types.SWITCH_PLATFORM_VIEW,
+    payload: platformView,
+  }
+}

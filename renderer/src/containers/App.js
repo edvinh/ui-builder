@@ -15,25 +15,17 @@ import {
   MenuItem,
   withStyles,
 } from '@material-ui/core'
-import FolderIcon from '@material-ui/icons/Folder'
-import ViewIcon from '@material-ui/icons/ViewCompact'
+import AddIcon from '@material-ui/icons/Add'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import styled from 'styled-components'
 import * as projectActions from '../actions/projectActions'
+import * as layoutActions from '../actions/layoutActions'
 import ViewToggleButtonGroup from '../components/ViewToggleButtonGroup'
 import TopBar from '../components/TopBar'
-import MobileView from '../components/MobileView'
+import MainView from '../components/MainView'
+import { getComponents } from '../utils/componentMapper'
 
-const StyledDrawer = styled(props => <Drawer {...props} classes={{ paper: 'paper' }} />)`
-  & .paper {
-    min-width: 100%;
-    /*
-    min-width: 200px;
-    max-width: 350px;
-    margin-right: 20%; */
-    top: 50px; /* hack: AppBar height */
-  }
-`
+const componentTypes = getComponents()
 
 const drawerWidth = 250
 
@@ -72,7 +64,6 @@ const StyledListSubheader = styled(ListSubheader)`
 `
 
 const App = (props) => {
-  const [selectedListItem, setSelectedListItem] = useState(0)
   const [openMenu, setOpenMenu] = useState({ anchorEl: null, open: false })
 
   const addView = () => {
@@ -85,6 +76,10 @@ const App = (props) => {
     props.addView({
       type: 'folder',
     })
+  }
+
+  const addComponent = (type) => {
+    props.addComponent(type)
   }
 
   return (
@@ -118,21 +113,18 @@ const App = (props) => {
             </StyledListSubheader>
           }
         >
-          {props.views.map(view => (
-            <ListItem
-              key={`l-${view.id}`}
-              button
-              selected={selectedListItem === view.id}
-              onClick={() => setSelectedListItem(view.id)}
-            >
-              <ListItemIcon>{view.type === 'view' ? <ViewIcon /> : <FolderIcon />}</ListItemIcon>
-              <ListItemText primary={view.name} />
+          {componentTypes.map((type, i) => (
+            <ListItem onClick={() => addComponent(type.name)} button key={`${type.name}-${i}`}>
+              <ListItemText primary={type.displayName} />
+              <ListItemIcon>
+                <AddIcon />
+              </ListItemIcon>
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <ViewToggleButtonGroup />
-      <MobileView />
+      <ViewToggleButtonGroup onChange={platform => props.switchPlatformView(platform)} />
+      <MainView />
     </StyledWrapper>
   )
 }
@@ -145,7 +137,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ ...projectActions }, dispatch)
+  return bindActionCreators({ ...projectActions, ...layoutActions }, dispatch)
 }
 
 App.propTypes = {

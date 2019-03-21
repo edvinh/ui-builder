@@ -103,11 +103,11 @@ const TopBar = ({ classes, leftOffset }) => (
 
 TopBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  leftOffset: PropTypes.number.isRequired,
+  leftoffset: PropTypes.number.isRequired,
 }
 
 TopBar.defaultProps = {
-  leftOffset: 0,
+  leftoffset: 0,
 }
 
 export default withStyles(styles)(TopBar)
