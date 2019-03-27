@@ -41,16 +41,14 @@ class MobileView extends Component {
   constructor (props) {
     super(props)
 
+    window.addEventListener('resize', this.updateDimensions)
+
     const { width, height } = calcViewport(props.platformView, window.innerHeight)
     this.state = {
       width,
       height,
       selectedComponent: null,
     }
-  }
-
-  componentDidMount () {
-    window.addEventListener('resize', this.updateDimensions)
   }
 
   componentWillUnmount () {
@@ -92,6 +90,7 @@ class MobileView extends Component {
     .map(component => ({
       Component: getComponent(component.name),
       id: component.i,
+      props: component.props,
     }))
     .map(component => (
       <GridItem
@@ -100,7 +99,7 @@ class MobileView extends Component {
         onClick={this.onGridItemClick}
         onRightClick={this.onGridItemRightClick}
       >
-        <component.Component />
+        <component.Component {...component.props} />
       </GridItem>
     ))
 
@@ -120,7 +119,7 @@ class MobileView extends Component {
         <GridLayout
           containerPadding={[0, 0]}
           layout={this.props.layout}
-          cols={12}
+          cols={6}
           margin={[0, 0]}
           rowHeight={8}
           width={width}

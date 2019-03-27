@@ -14,6 +14,7 @@ import {
   Menu,
   MenuItem,
   withStyles,
+  Button,
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import MoreIcon from '@material-ui/icons/MoreVert'
@@ -82,6 +83,10 @@ const App = (props) => {
     props.addComponent(type)
   }
 
+  const generateCode = () => {
+    props.generateCode(props.layout)
+  }
+
   return (
     <StyledWrapper>
       <TopBar />
@@ -105,7 +110,7 @@ const App = (props) => {
         <List
           component="nav"
           subheader={
-            <StyledListSubheader component="div">
+            <StyledListSubheader component="span" style={{ width: '100%' }}>
               Views
               <IconButton onClick={evt => setOpenMenu({ anchorEl: evt.currentTarget, open: true })}>
                 <MoreIcon />
@@ -122,6 +127,14 @@ const App = (props) => {
             </ListItem>
           ))}
         </List>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ margin: '32px 8px' }}
+          onClick={generateCode}
+        >
+          Generate Code
+        </Button>
       </Drawer>
       <ViewToggleButtonGroup onChange={platform => props.switchPlatformView(platform)} />
       <MainView />
@@ -133,6 +146,7 @@ function mapStateToProps (state) {
   return {
     views: state.project.views,
     projectName: state.project.name,
+    layout: state.layout.layout,
   }
 }
 

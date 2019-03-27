@@ -1,5 +1,6 @@
 import Card from '../components/grid/Card'
 import Header from '../components/grid/Header'
+import Container from '../components/grid/Container'
 
 const components = [
   {
@@ -21,6 +22,17 @@ const components = [
     layout: {
       x: 0,
       y: 0,
+      w: 12,
+      h: 24,
+    },
+  },
+  {
+    displayName: 'Container',
+    name: 'container',
+    component: Container,
+    layout: {
+      x: 0,
+      y: 5,
       w: 12,
       h: 24,
     },

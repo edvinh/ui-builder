@@ -9,6 +9,11 @@ const StyledWrapper = styled.div`
   height: inherit;
   border: ${props => (props.focus ? '1px solid #447cd6' : '1px solid transparent')};
   overflow: hidden;
+  flex-direction: column;
+  justify-items: stretch;
+  justify-content: stretch;
+  flex: 1;
+  display: flex;
 `
 
 class GridItem extends Component {
@@ -48,7 +53,6 @@ class GridItem extends Component {
 }
 
 GridItem.propTypes = {
-  key: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
   onClick: PropTypes.func,

@@ -1,4 +1,6 @@
 import * as types from '../constants/types'
+import * as API from './api'
+
 import { getLayout } from '../utils/componentMapper'
 
 export function addComponent (componentName) {
@@ -33,5 +35,17 @@ export function replaceLayout (layout) {
   return {
     type: types.REPLACE_LAYOUT,
     payload: layout,
+  }
+}
+
+export function generateCode (layout) {
+  return async (dispatch) => {
+    API.generateCode(layout)
+    dispatch({
+      type: types.GENERATE_CODE,
+      payload: {
+        success: true,
+      },
+    })
   }
 }

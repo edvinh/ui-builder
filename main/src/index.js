@@ -16,8 +16,8 @@ let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1420,
-    height: 950,
+    width: 1430,
+    height: 1070,
     transparent: false,
     webPreferences: {
       nodeIntegration: true,
@@ -46,6 +46,9 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  // Init API
+  require('./codegen')
 }
 
 // This method will be called when Electron has finished
