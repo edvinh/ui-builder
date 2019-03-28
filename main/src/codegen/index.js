@@ -1,8 +1,6 @@
 const { ipcMain } = require('electron')
-const { exec } = require('child_process')
-const fs = require('fs')
-const path = require('path')
 
+const { writeCodeToFile } = require('./commands')
 const { GENERATE_CODE } = require('../constants/messagetypes')
 const { actionBarTemplate, cardTemplate, wrapperTemplate } = require('./templates')
 
@@ -18,24 +16,13 @@ ipcMain.on(GENERATE_CODE, (event, arg) => {
 
   const codeString = `
     import React from 'react'
+    import { View } from 'react-native'
     ${importsString}
     ${wrapperString}
   `
 
-  const codePath = path.resolve(__dirname, '../../tmp/temp.js')
-  const prettierPath = path.resolve(__dirname, '../../node_modules/prettier/bin-prettier.js')
-
-  fs.writeFileSync(codePath, codeString)
-
-  // Run prettier on generated code
-  exec(
-    `node ${prettierPath} --print-width 80 --no-semi --single-quote --trailing-comma es5 --write ${codePath}`,
-    (err, stdout, stderr) => {
-      if (err) {
-        console.log('error :(')
-      }
-    }
-  )
+  // Write code to temp .js file
+  writeCodeToFile(codeString)
 })
 
 function generateImports (components) {
@@ -55,7 +42,7 @@ function generateImports (components) {
   return names
 }
 
-function mapToPropString (props, ignore) {
+function mapToPropString (props) {
   return Object.keys(props)
     .map(key =>
       typeof props[key] === 'string' ? `${key}="${props[key]}"` : `${key}={${props[key]}}`
