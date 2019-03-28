@@ -55,7 +55,7 @@ export default function projectReducer (state = initialState, action) {
         layout: state.layout.filter(l => l.i !== action.payload),
       }
 
-    case types.REPLACE_LAYOUT:
+    case types.REPLACE_LAYOUT: {
       // The new layout object (action.payload) doesn't have the
       // `name` or `props` key on each item. We need manually add it from the old layout.
       const newLayout = action.payload.map((newLayoutItem) => {
@@ -72,6 +72,7 @@ export default function projectReducer (state = initialState, action) {
         ...state,
         layout: newLayout,
       }
+    }
     default:
       return state
   }

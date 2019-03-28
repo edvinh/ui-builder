@@ -1,11 +1,15 @@
 import * as types from '../constants/types'
 import * as API from './api'
 
-import { getLayout } from '../utils/componentMapper'
+import { getLayout, getDefaultProps } from '../utils/componentMapper'
 
 export function addComponent (componentName) {
   const component = getLayout(componentName)
 
+  // Get default props
+  component.props = getDefaultProps(componentName)
+
+  // Set component name
   component.name = componentName
 
   // TODO 0.0001% risk for a collision... good enough for now :-)

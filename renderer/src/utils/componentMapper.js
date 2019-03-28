@@ -14,6 +14,10 @@ const components = [
       h: 7,
       static: true,
     },
+    props: {
+      title: 'Title',
+      leftIcon: 'menu',
+    },
   },
   {
     displayName: 'Card',
@@ -24,6 +28,10 @@ const components = [
       y: 0,
       w: 12,
       h: 24,
+    },
+    props: {
+      content: 'Card Content',
+      title: 'Card Title',
     },
   },
   {
@@ -45,6 +53,10 @@ export function getComponents () {
 
 export function getLayout (componentName) {
   return components.find(component => component.name === componentName).layout
+}
+
+export function getDefaultProps (componentName) {
+  return components.find(component => component.name === componentName).props
 }
 
 export function getComponent (componentName) {
