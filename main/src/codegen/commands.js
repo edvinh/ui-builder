@@ -3,9 +3,9 @@ const fs = require('fs')
 const path = require('path')
 
 const writeCodeToFile = code => {
-  // const codePath = path.resolve(__dirname, '../../gen/temp.js')
+  // const codePath = path.resolve(__dirname, '../../generated/temp.js')
 
-  const codePath = path.resolve(__dirname, '../../gen/rnw-app/src/App.js')
+  const codePath = path.resolve(__dirname, '../../generated/rnw-app/src/App.js')
   const prettierPath = path.resolve(__dirname, '../../node_modules/prettier/bin-prettier.js')
 
   fs.writeFileSync(codePath, code)
