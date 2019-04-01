@@ -2,21 +2,26 @@ const { ipcMain } = require('electron')
 
 const { writeCodeToFile } = require('./commands')
 const { GENERATE_CODE } = require('../constants/messagetypes')
-const { actionBarTemplate, cardTemplate, wrapperTemplate } = require('./templates')
+const { actionBarTemplate, cardTemplate, wrapperTemplate, defaultImports } = require('./templates')
 
 ipcMain.on(GENERATE_CODE, (event, arg) => {
   const layout = JSON.parse(arg)
 
   const importsString = generateImports(layout)
-  const componentsString = layout
-    .map(component => generateComponent(component))
-    .reduce((acc, curr) => `${acc}\n${curr}`)
+  let componentsString = layout.map(component => generateComponent(component))
+
+  // If a header is present, wrap everything beneath it in a ScrollView
+  if (layout[0].name === 'actionbar') {
+    componentsString.splice(1, 0, '<ScrollView>')
+    componentsString.push('</ScrollView>')
+  }
+
+  componentsString = componentsString.reduce((acc, curr) => `${acc}\n${curr}`)
 
   const wrapperString = wrapperTemplate(componentsString)
 
   const codeString = `
-    import React from 'react'
-    import { View } from 'react-native'
+    ${defaultImports}
     ${importsString}
     ${wrapperString}
   `
@@ -26,7 +31,8 @@ ipcMain.on(GENERATE_CODE, (event, arg) => {
 })
 
 function generateImports (components) {
-  const importString = name => `import { ${name} } from 'react-native-elements'`
+  // const importString = name => `import { ${name} } from 'react-native-elements'`
+  const importString = name => `import ${name} from './components/${name}/'`
 
   let names = components.map(c => c.name)
 
