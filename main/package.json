@@ -16,6 +16,7 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "ps-tree": "^1.2.0"
   }
 }

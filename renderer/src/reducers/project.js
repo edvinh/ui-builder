@@ -31,6 +31,17 @@ export default function projectReducer (state = initialState, action) {
         ...state,
         platformView: action.payload,
       }
+    case types.START_SERVERS:
+      return {
+        ...state,
+        projectServersStarted: true,
+      }
+
+    case types.KILL_SERVERS:
+      return {
+        ...state,
+        projectServersStarted: false,
+      }
 
     default:
       return state

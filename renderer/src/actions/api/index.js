@@ -16,3 +16,11 @@ export function setProjectName (name) {
 export function generateCode (layout) {
   ipcRenderer.send('GENERATE_CODE', JSON.stringify(layout))
 }
+
+export function startServers () {
+  ipcRenderer.send('START_PROJECT')
+}
+
+export function killServers () {
+  ipcRenderer.send('KILL_PROJECT')
+}

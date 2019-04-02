@@ -41,3 +41,31 @@ export function switchPlatformView (platformView) {
     payload: platformView,
   }
 }
+
+export function startServers () {
+  return async (dispatch) => {
+    dispatch({
+      type: types.START_SERVERS,
+    })
+
+    API.startServers()
+
+    // dispatch({
+    //  type: types.START_SERVERS_SUCCESS,
+    // })
+  }
+}
+
+export function killServers () {
+  return async (dispatch) => {
+    dispatch({
+      type: types.KILL_SERVERS,
+    })
+
+    API.killServers()
+
+    // dispatch({
+    //  type: types.KILL_SERVERS_SUCCESS,
+    // })
+  }
+}

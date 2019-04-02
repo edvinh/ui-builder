@@ -87,6 +87,13 @@ const App = (props) => {
     props.generateCode(props.layout)
   }
 
+  const toggleProjectServers = () => {
+    if (props.projectServersStarted) {
+      props.killServers()
+    } else {
+      props.startServers()
+    }
+  }
   return (
     <StyledWrapper>
       <TopBar />
@@ -135,6 +142,14 @@ const App = (props) => {
         >
           Generate Code
         </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ margin: '16px 8px' }}
+          onClick={toggleProjectServers}
+        >
+          {props.projectServersStarted ? 'Stop Project' : 'Launch Project'}
+        </Button>
       </Drawer>
       <ViewToggleButtonGroup onChange={platform => props.switchPlatformView(platform)} />
       <MainView />
@@ -147,6 +162,7 @@ function mapStateToProps (state) {
     views: state.project.views,
     projectName: state.project.name,
     layout: state.layout.layout,
+    projectServersStarted: state.project.projectServersStarted,
   }
 }
 

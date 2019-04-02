@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron')
 
-const { writeCodeToFile } = require('./commands')
-const { GENERATE_CODE } = require('../constants/messagetypes')
+const { writeCodeToFile, startProjects, killProjects } = require('./commands')
+const { GENERATE_CODE, START_PROJECT, KILL_PROJECT } = require('../constants/messagetypes')
 const { actionBarTemplate, cardTemplate, wrapperTemplate, defaultImports } = require('./templates')
 
 ipcMain.on(GENERATE_CODE, (event, arg) => {
@@ -71,3 +71,11 @@ function generateComponent (component) {
     return cardTemplate(propsString, children)
   }
 }
+
+ipcMain.on(START_PROJECT, (event, arg) => {
+  startProjects()
+})
+
+ipcMain.on(KILL_PROJECT, (event, arg) => {
+  killProjects()
+})
