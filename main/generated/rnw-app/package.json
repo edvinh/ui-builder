@@ -4,7 +4,7 @@
   "private": true,
   "main": "./node_modules/expo/AppEntry.js",
   "scripts": {
-    "start:web": "react-app-rewired start",
+    "start:web": "cross-env PORT=3001 react-app-rewired start",
     "build:web": "react-app-rewired build",
     "test:web": "react-app-rewired test --env=jsdom",
     "eject:web": "react-scripts eject",
@@ -28,6 +28,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "cross-env": "^5.2.0",
     "customize-cra": "^0.2.12",
     "expo": "^32.0.6",
     "react": "^16.8.4",
