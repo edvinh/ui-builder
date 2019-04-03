@@ -5,6 +5,7 @@ const psTree = require('ps-tree')
 
 let webProcess = null
 let nativeProcess = null
+const isWindows = process.platform === 'win32'
 
 const writeCodeToFile = code => {
   // const codePath = path.resolve(__dirname, '../../generated/temp.js')
@@ -28,9 +29,6 @@ const writeCodeToFile = code => {
 const startProjects = () => {
   const projectPath = path.resolve(__dirname, '../../generated/rnw-app')
 
-  // Windows uses `&` for combining commands, osx/linux uses `&&`
-  const isWindows = process.platform === 'win32'
-
   // Start web server
   webProcess = exec(`cd ${projectPath} ${isWindows ? '&' : '&&'} yarn start:web`)
 
@@ -41,20 +39,23 @@ const startProjects = () => {
 // Kills child & grandchildren
 const killProcess = child => {
   psTree(child.pid, (err, children) => {
-    spawn(
-      'kill',
+    if (!isWindows) {
+      // Spawn kill on Linux/OSX
+      spawn(
+        'kill',
 
-      // SIGKILL
-      ['-9'].concat(
-        children.map(p => {
-          return p.PID
-        })
+        // SIGKILL
+        ['-9'].concat(
+          children.map(p => {
+            return p.PID
+          })
+        )
       )
-    )
+    } else {
+      // Spawn taskkill on Windows
+      spawn('taskkill', ['/pid', child.pid, '/f', '/t'])
+    }
   })
-
-  // Possible windows workaround
-  // spawn("taskkill", ["/pid", child.pid, '/f', '/t'])
 }
 
 const killProjects = () => {
