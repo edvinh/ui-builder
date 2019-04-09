@@ -9,6 +9,7 @@ const {
   buttonTemplate,
   wrapperTemplate,
   defaultImports,
+  getTemplate,
 } = require('./templates')
 
 ipcMain.on(GENERATE_CODE, (event, arg) => {
@@ -56,36 +57,31 @@ function generateImports (components) {
 }
 
 function mapToPropString (props) {
+  if (!props) {return ''}
+
   return Object.keys(props)
     .map(key =>
       typeof props[key] === 'string' ? `${key}="${props[key]}"` : `${key}={${props[key]}}`
     )
-    .reduce((acc, curr) => `${acc} ${curr}`)
+    .join(' ')
 }
 
 function generateComponent (component) {
   const { name, props, children } = component
 
-  switch (name) {
-    case 'header': {
-      const propsString = mapToPropString(props)
-      return headerTemplate(propsString)
-    }
-    case 'card': {
-      const childrenPropName = 'content'
-      const children = props[childrenPropName]
-      delete props[childrenPropName]
+  // Render props string, if any props
+  const propsString = mapToPropString(props)
 
-      const propsString = mapToPropString(props)
-      return cardTemplate(propsString, children)
-    }
-    case 'text':
-      return textTemplate('', props.text)
-    case 'button': {
-      const propsString = mapToPropString(props)
-      return buttonTemplate(propsString)
-    }
-  }
+  // Get the specific template for the component
+  const template = getTemplate(name)
+
+  // Recursively render children
+  // If it's a primitive type (number, string, etc) just return the string (e.g. for text)
+  const childrenString = children
+    .map(child => (typeof child !== 'object' ? child : generateComponent(child)))
+    .join('\n')
+
+  return template(propsString, childrenString)
 }
 
 ipcMain.on(START_PROJECT, (event, arg) => {

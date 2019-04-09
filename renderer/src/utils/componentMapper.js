@@ -39,9 +39,9 @@ const components = [
     displayName: 'Text',
     name: 'text',
     component: Text,
-    children: [],
+    children: ['Text View'],
     canHaveChildren: false,
-    props: { text: 'Text View' },
+    props: {},
   },
   {
     displayName: 'Button',
@@ -59,7 +59,7 @@ export function getComponents () {
 
 export function getComponentData (componentName) {
   const {
-    displayName, name, props, canHaveChildren,
+    displayName, name, props, canHaveChildren, children,
   } = components.find(
     component => component.name === componentName
   )
@@ -67,7 +67,7 @@ export function getComponentData (componentName) {
     displayName,
     name,
     props: { ...props },
-    children: [],
+    children: [...children],
     canHaveChildren,
   }
 }

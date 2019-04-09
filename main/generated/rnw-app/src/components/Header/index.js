@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header as RNEHeader, Icon } from 'react-native-elements'
+import { Header as RNEHeader } from 'react-native-elements'
 
 const Header = ({ leftIcon, rightIcon, title }) => (
   <RNEHeader

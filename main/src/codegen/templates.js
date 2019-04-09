@@ -1,5 +1,4 @@
 const headerTemplate = props => `<Header ${props} />`
-
 const cardTemplate = (props, children) => `<Card ${props}>${children}</Card>`
 const textTemplate = (props, text) => `<Text ${props}>${text}</Text>`
 const buttonTemplate = props => `<Button ${props} />`
@@ -25,6 +24,17 @@ import React from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
 `
 
+const getTemplate = componentName => {
+  const templates = {
+    header: headerTemplate,
+    card: cardTemplate,
+    text: textTemplate,
+    button: buttonTemplate,
+  }
+
+  return templates[componentName]
+}
+
 module.exports = {
   headerTemplate,
   cardTemplate,
@@ -32,4 +42,5 @@ module.exports = {
   buttonTemplate,
   wrapperTemplate,
   defaultImports,
+  getTemplate,
 }

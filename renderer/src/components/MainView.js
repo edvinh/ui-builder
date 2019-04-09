@@ -19,23 +19,20 @@ const reorder = (list, startIndex, endIndex) => {
 const insert = (list, item, index) => {
   const newList = [...list]
   newList.splice(index, 0, item)
-  console.log('insert', newList, item)
   return newList
 }
 
 const recursiveDelete = (items, id) => {
-  console.log('items rec', items)
   const itemsCopy = [...items]
-  console.log('items rec copy', itemsCopy)
   let droppedItem = itemsCopy.find(item => item.id === id)
   if (!droppedItem) {
     itemsCopy
       .filter(item => item.canHaveChildren)
-      .forEach((item) => {
-        console.log(item, id)
+      .some((item) => {
         droppedItem = item.children.find(child => child.id === id)
         if (droppedItem) {
           item.children = item.children.filter(child => child.id !== id)
+          return true
         }
       })
   }
@@ -94,7 +91,6 @@ class MainView extends Component {
     }
 
     let items = [...this.props.layout]
-    console.log('before', items)
     let droppedItem = items.find(i => i.id === draggableId)
 
     if (combine) {
@@ -117,6 +113,7 @@ class MainView extends Component {
       if (droppedItem.name === 'card' && itemDroppedOn.name === 'card') {
         return
       }
+
       itemDroppedOn.children.push(droppedItem)
       items = items.filter(item => item.id !== droppedItem.id)
       this.updateLayout(items)

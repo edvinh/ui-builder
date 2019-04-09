@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native/dist/styled-components.native.cjs'
 
-import { Text, View, Image } from 'react-native'
-import { getComponent } from '../../utils/componentMapper'
 import Item from '../dnd/Item'
 
 const StyledCard = styled.View`
@@ -38,11 +36,6 @@ const StyledImage = styled.Image`
   height: 240px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-`
-
-const ChildWrapper = styled.View`
-  position: relative;
-  z-index: 100 !important;
 `
 
 const CardComponent = ({
