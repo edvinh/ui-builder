@@ -1,6 +1,8 @@
-const actionBarTemplate = props => `<Header ${props} />`
+const headerTemplate = props => `<Header ${props} />`
 
 const cardTemplate = (props, children) => `<Card ${props}>${children}</Card>`
+const textTemplate = (props, text) => `<Text ${props}>${text}</Text>`
+const buttonTemplate = props => `<Button ${props} />`
 
 const wrapperTemplate = children => `
 const styles = StyleSheet.create({
@@ -24,8 +26,10 @@ import { View, ScrollView, StyleSheet } from 'react-native'
 `
 
 module.exports = {
-  actionBarTemplate,
+  headerTemplate,
   cardTemplate,
+  textTemplate,
+  buttonTemplate,
   wrapperTemplate,
   defaultImports,
 }

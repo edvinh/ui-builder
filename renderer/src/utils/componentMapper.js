@@ -1,19 +1,16 @@
-import Card from '../components/grid/Card'
-import Header from '../components/grid/Header'
-import Container from '../components/grid/Container'
+import Card from '../components/dnd-components/Card'
+import Header from '../components/dnd-components/Header'
+import SplitView from '../components/dnd-components/SplitView'
+import Text from '../components/dnd-components/Text'
+import Button from '../components/dnd-components/Button'
 
 const components = [
   {
-    displayName: 'Action Bar',
-    name: 'actionbar',
+    displayName: 'Header',
+    name: 'header',
     component: Header,
-    layout: {
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 7,
-      static: true,
-    },
+    children: [],
+    canHaveChildren: false,
     props: {
       title: 'Title',
       leftIcon: 'menu',
@@ -23,27 +20,36 @@ const components = [
     displayName: 'Card',
     name: 'card',
     component: Card,
-    layout: {
-      x: 0,
-      y: 0,
-      w: 12,
-      h: 24,
-    },
+    children: [],
+    canHaveChildren: true,
     props: {
       content: 'Card Content',
       title: 'Card Title',
     },
   },
   {
-    displayName: 'Container',
-    name: 'container',
-    component: Container,
-    layout: {
-      x: 0,
-      y: 5,
-      w: 12,
-      h: 24,
-    },
+    displayName: 'Split View',
+    name: 'splitview',
+    component: SplitView,
+    children: [],
+    canHaveChildren: true,
+    props: {},
+  },
+  {
+    displayName: 'Text',
+    name: 'text',
+    component: Text,
+    children: [],
+    canHaveChildren: false,
+    props: { text: 'Text View' },
+  },
+  {
+    displayName: 'Button',
+    name: 'button',
+    component: Button,
+    children: [],
+    canHaveChildren: false,
+    props: { title: 'Button' },
   },
 ]
 
@@ -51,8 +57,19 @@ export function getComponents () {
   return components
 }
 
-export function getLayout (componentName) {
-  return components.find(component => component.name === componentName).layout
+export function getComponentData (componentName) {
+  const {
+    displayName, name, props, canHaveChildren,
+  } = components.find(
+    component => component.name === componentName
+  )
+  return {
+    displayName,
+    name,
+    props: { ...props },
+    children: [],
+    canHaveChildren,
+  }
 }
 
 export function getDefaultProps (componentName) {

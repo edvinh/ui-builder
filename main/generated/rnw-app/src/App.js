@@ -2,7 +2,7 @@ import React from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
 
 import Header from './components/Header/'
-import Card from './components/Card/'
+import Splitview from './components/Splitview/'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,14 +11,7 @@ const styles = StyleSheet.create({
 })
 
 const App = () => (
-  <View style={styles.container}>
-    <Header title="Title" leftIcon="menu" />
-    <ScrollView>
-      <Card title="Card Title">Card Content</Card>
-      <Card title="Card Title">Card Content</Card>
-      <Card title="Card Title">Card Content</Card>
-    </ScrollView>
-  </View>
+  <View style={styles.container}>undefined undefined undefined</View>
 )
 
 export default App

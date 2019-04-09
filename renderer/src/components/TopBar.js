@@ -8,8 +8,8 @@ import InputBase from '@material-ui/core/InputBase'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
-
 import styled from 'styled-components'
+import ViewToggleButtonGroup from './ViewToggleButtonGroup'
 
 const styles = theme => ({
   grow: {
@@ -75,13 +75,14 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  padding-bottom: 16px;
 `
 
-const TopBar = ({ classes, leftOffset }) => (
+const TopBar = ({ classes, leftOffset, switchPlatformView }) => (
   <Wrapper>
     <StyledAppBar position="static" color="default" leftOffset={leftOffset}>
       <Toolbar variant="dense">
-        <Typography variant="h6">UI Builder</Typography>
+        <ViewToggleButtonGroup onChange={switchPlatformView} />
 
         <div className={classes.grow} />
         <div className={classes.search}>

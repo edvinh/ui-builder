@@ -13,7 +13,7 @@ const ViewToggleButtonGroup = ({ onChange }) => {
   }
 
   return (
-    <Tabs onChange={changeVal} value={platform}>
+    <Tabs onChange={changeVal} value={platform} style={{ marginLeft: -24 }}>
       <Tab value="mobile" icon={<MobileIcon />} />
       <Tab value="web" icon={<DesktopIcon />} />
     </Tabs>

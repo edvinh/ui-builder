@@ -1,19 +1,14 @@
+import _ from 'lodash'
 import * as types from '../constants/types'
 import * as API from './api'
 
-import { getLayout, getDefaultProps } from '../utils/componentMapper'
+import { getComponentData } from '../utils/componentMapper'
 
 export function addComponent (componentName) {
-  const component = getLayout(componentName)
-
-  // Get default props
-  component.props = getDefaultProps(componentName)
-
-  // Set component name
-  component.name = componentName
+  const component = getComponentData(componentName)
 
   // TODO 0.0001% risk for a collision... good enough for now :-)
-  component.i = `${componentName}-${(Math.random() * 10000).toFixed(0)}`
+  component.id = `${componentName}-${(Math.random() * 10000).toFixed(0)}`
 
   return {
     type: types.ADD_COMPONENT,
@@ -31,6 +26,13 @@ export function removeComponent (componentId) {
 export function updateComponent (component) {
   return {
     type: types.UPDATE_COMPONENT,
+    payload: component,
+  }
+}
+
+export function selectComponent (component) {
+  return {
+    type: types.SELECT_COMPONENT,
     payload: component,
   }
 }
