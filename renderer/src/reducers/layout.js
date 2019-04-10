@@ -33,23 +33,6 @@ export default function projectReducer (state = initialState, action) {
       }
 
     case types.REPLACE_LAYOUT: {
-      // // The new layout object (action.payload) doesn't have the
-      // // `name` or `props` key on each item. We need manually add it from the old layout.
-      // const newLayout = action.payload.map((newLayoutItem) => {
-      //   const oldLayoutItem = state.layout.find(l => newLayoutItem.i === l.i)
-
-      //   // Replace the layout item and add reapply the old layout item's name & props
-      //   return {
-      //     ...oldLayoutItem,
-      //     ...newLayoutItem,
-      //   }
-      // })
-
-      // return {
-      //   ...state,
-      //   layout: newLayout,
-      // }
-
       return {
         ...state,
         layout: _.cloneDeep(action.payload),
@@ -64,11 +47,18 @@ export default function projectReducer (state = initialState, action) {
 
     case types.UPDATE_COMPONENT: {
       const newLayout = _.cloneDeep(state.layout)
-      const component = newLayout.find(c => c.id === action.payload.id)
+      let component = newLayout.find(c => c.id === action.payload.id)
 
-      // TODO Recursive find
+      // Check component children if not in root
       if (!component) {
-        return state
+        newLayout.some((c) => {
+          component = c.children.find(child => child.id === action.payload.id)
+          return !!component
+        })
+
+        if (!component) {
+          return state
+        }
       }
 
       // If it was a prop change
