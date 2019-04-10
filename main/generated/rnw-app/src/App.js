@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet } from 'react-native'
 
 import Header from './components/Header/'
 import Card from './components/Card/'
-import Text from './components/Text/'
+import Button from './components/Button/'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,17 +11,18 @@ const styles = StyleSheet.create({
   },
 
   scrollContentContainer: {
-    flex: 1,
+    padding: 8,
   },
 })
 
 const App = () => (
   <View style={styles.container}>
-    <Header title="Title" leftIcon="menu" rightIcon={null} />
-    <ScrollView>
-      <Card title="Card Title" image={null} />
-      <Card title="Card Title" image={null} />
-      <Text>Text View</Text>
+    <Header title="Title" leftIcon="menu" rightIcon="face" />
+    <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+      <Card title="Card Title" />
+      <Card title="Card Title">
+        <Button title="Button" />
+      </Card>
     </ScrollView>
   </View>
 )

@@ -42,18 +42,27 @@ ipcMain.on(GENERATE_CODE, (event, arg) => {
 })
 
 function generateImports (components) {
-  // const importString = name => `import { ${name} } from 'react-native-elements'`
   const importString = name => `import ${name} from './components/${name}/'`
-
   let names = components.map(c => c.name)
 
+  let childDeps = []
+
+  // TODO Refactor... only goes one level down, needs to be recursive
+  components
+    .map(c => c.children)
+    .forEach(children => {
+      const deps = children.map(child => child.name)
+      childDeps = [...childDeps, ...deps]
+    })
+
   // Remove duplicates & capitalize and use in import template string
+  names = [...names, ...childDeps]
+  console.log(names)
   names = names
     .filter((v, i) => names.indexOf(v) === i)
     .map(name => name.charAt(0).toUpperCase() + name.slice(1))
     .map(capitalizedName => importString(capitalizedName))
     .reduce((acc, curr) => `${acc}\n${curr}`)
-
   return names
 }
 
@@ -63,9 +72,15 @@ function mapToPropString (props) {
   }
 
   return Object.keys(props)
-    .map(key =>
-      typeof props[key] === 'string' ? `${key}="${props[key]}"` : `${key}={${props[key]}}`
-    )
+    .map(key => {
+      if (typeof props[key] === 'string') {
+        return `${key}="${props[key]}"`
+      } else if (props[key] !== null) {
+        return `${key}={${props[key]}}`
+      } else {
+        return ''
+      }
+    })
     .join(' ')
 }
 
