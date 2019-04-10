@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
 
 const App = () => (
   <View style={styles.container}>
-    <Header title="Header Title" leftIcon="menu" rightIcon="home" />
+    <Header title="Title" leftIcon="menu" />
     <ScrollView>
-      <Card title="Card Title">undefined</Card>
-      <Card title="Card 2 Title">undefined</Card>
+      <Card title="Card Title">Card Content</Card>
+      <Card title="Card Title">Card Content</Card>
       <Button title="Button" />
       <Text>Text View</Text>
     </ScrollView>

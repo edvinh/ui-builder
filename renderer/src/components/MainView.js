@@ -62,7 +62,7 @@ const StyledPaper = styled(Paper)`
   max-height: ${props => props.height}px;
   /* overflow-y: scroll; */
   overflow-x: hidden;
-  margin: 0 auto;
+  margin: 32px auto 16px auto;
 `
 
 class MainView extends Component {
@@ -95,7 +95,7 @@ class MainView extends Component {
 
     if (combine) {
       const itemDroppedOn = items.find(i => i.id === combine.draggableId)
-      if (!itemDroppedOn.canHaveChildren) {
+      if (!itemDroppedOn || !itemDroppedOn.canHaveChildren) {
         return
       }
 
@@ -137,28 +137,16 @@ class MainView extends Component {
     this.props.replaceLayout(layout)
   }
 
-  onItemClick = (evt, item) => {
-    this.setState({
-      selectedComponent: item,
-    })
-
-    this.props.selectComponent(item)
-  }
-
   render () {
-    const { layout, platformView } = this.props
+    const { layout, platformView, selectedComponent } = this.props
     const { width, height } = calcViewport(platformView)
+
     return (
       <StyledPaper width={width} height={height} id="rootView" onClick={this.onViewClick}>
         <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart}>
           <ItemList droppableId="droppable">
             {layout.map((item, index) => (
-              <Item
-                index={index}
-                item={item}
-                key={`item-${index}`}
-                onItemClick={this.onItemClick}
-              />
+              <Item index={index} item={item} key={`item-${index}`} />
             ))}
           </ItemList>
         </DragDropContext>
@@ -178,6 +166,7 @@ function mapStateToProps (state) {
   return {
     layout: state.layout.layout,
     platformView: state.project.platformView,
+    selectedComponent: state.layout.selectedComponent,
   }
 }
 

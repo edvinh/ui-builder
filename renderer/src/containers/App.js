@@ -1,33 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import * as projectActions from '../actions/projectActions'
 import * as layoutActions from '../actions/layoutActions'
-import ViewToggleButtonGroup from '../components/ViewToggleButtonGroup'
-import TopBar from '../components/TopBar'
 import LeftDrawer from '../components/LeftDrawer'
 import MainView from '../components/MainView'
-
-const drawerWidth = 250
+import RightDrawer from '../components/RightDrawer'
 
 const StyledWrapper = styled.div`
-  margin-left: ${drawerWidth}px;
+  display: flex;
+  width: 100%;
 `
 
 const App = (props) => {
-  const addView = () => {
-    props.addView({
-      type: 'view',
-    })
-  }
-
-  const addFolder = () => {
-    props.addView({
-      type: 'folder',
-    })
-  }
+  useEffect(() => {
+    props.checkIfProjectServersStarted()
+  }, [])
 
   const addComponent = (type) => {
     props.addComponent(type)
@@ -45,28 +35,35 @@ const App = (props) => {
     }
   }
 
+  const updateComponent = (component) => {
+    props.updateComponent(component)
+  }
+
   return (
-    <StyledWrapper>
-      <TopBar switchPlatformView={platform => props.switchPlatformView(platform)} />
-      <LeftDrawer
-        generateCode={generateCode}
-        toggleProjectServers={toggleProjectServers}
-        addComponent={addComponent}
-        addView={addView}
-        addFolder={addFolder}
-        projectServersStarted={props.projectServersStarted}
-      />
-      <MainView />
-    </StyledWrapper>
+    <div>
+      <StyledWrapper>
+        <LeftDrawer
+          generateCode={generateCode}
+          toggleProjectServers={toggleProjectServers}
+          addComponent={addComponent}
+          projectServersStarted={props.projectServersStarted}
+        />
+        <MainView />
+        <RightDrawer
+          selectedComponent={props.selectedComponent}
+          updateComponent={updateComponent}
+        />
+      </StyledWrapper>
+    </div>
   )
 }
 
 function mapStateToProps (state) {
   return {
-    views: state.project.views,
     projectName: state.project.name,
     layout: state.layout.layout,
     projectServersStarted: state.project.projectServersStarted,
+    selectedComponent: state.layout.selectedComponent,
   }
 }
 
@@ -74,10 +71,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({ ...projectActions, ...layoutActions }, dispatch)
 }
 
-App.propTypes = {
-  views: PropTypes.array.isRequired,
-  addView: PropTypes.func.isRequired,
-}
+App.propTypes = {}
 
 export default connect(
   mapStateToProps,

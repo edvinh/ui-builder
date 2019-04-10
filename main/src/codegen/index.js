@@ -1,16 +1,13 @@
 const { ipcMain } = require('electron')
 
-const { writeCodeToFile, startProjects, killProjects } = require('./commands')
-const { GENERATE_CODE, START_PROJECT, KILL_PROJECT } = require('../constants/messagetypes')
+const { writeCodeToFile, startProjects, killProjects, projectsStarted } = require('./commands')
 const {
-  headerTemplate,
-  cardTemplate,
-  textTemplate,
-  buttonTemplate,
-  wrapperTemplate,
-  defaultImports,
-  getTemplate,
-} = require('./templates')
+  GENERATE_CODE,
+  START_PROJECT,
+  KILL_PROJECT,
+  CHECK_SERVERS_STARTED,
+} = require('../constants/messagetypes')
+const { wrapperTemplate, defaultImports, getTemplate } = require('./templates')
 
 ipcMain.on(GENERATE_CODE, (event, arg) => {
   const layout = JSON.parse(arg)
@@ -22,7 +19,11 @@ ipcMain.on(GENERATE_CODE, (event, arg) => {
 
   // If a header is present, wrap everything beneath it in a ScrollView
   if (layout[0].name === 'header') {
-    componentsString.splice(1, 0, '<ScrollView>')
+    componentsString.splice(
+      1,
+      0,
+      '<ScrollView contentContainerStyle={styles.scrollContentContainer}>'
+    )
     componentsString.push('</ScrollView>')
   }
 
@@ -57,7 +58,9 @@ function generateImports (components) {
 }
 
 function mapToPropString (props) {
-  if (!props) {return ''}
+  if (!props) {
+    return ''
+  }
 
   return Object.keys(props)
     .map(key =>
@@ -90,4 +93,9 @@ ipcMain.on(START_PROJECT, (event, arg) => {
 
 ipcMain.on(KILL_PROJECT, (event, arg) => {
   killProjects()
+})
+
+ipcMain.on(CHECK_SERVERS_STARTED, (event, arg) => {
+  console.log('check', event)
+  event.sender.send(CHECK_SERVERS_STARTED, projectsStarted())
 })

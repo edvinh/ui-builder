@@ -7,7 +7,11 @@ const wrapperTemplate = children => `
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
+  
+  scrollContentContainer: {
+    flex: 1,
+  },
 })
 
 const App = () => (

@@ -69,3 +69,18 @@ export function killServers () {
     // })
   }
 }
+
+export function checkIfProjectServersStarted () {
+  return async (dispatch) => {
+    dispatch({
+      type: types.CHECK_SERVERS_STARTED,
+    })
+
+    const res = await API.checkIfServersStarted()
+
+    dispatch({
+      type: types.CHECK_SERVERS_STARTED_SUCCESS,
+      payload: res,
+    })
+  }
+}

@@ -1,4 +1,6 @@
 /* global electron */
+import * as types from '../../constants/types'
+
 const { ipcRenderer } = electron
 
 /* API calls to electron's main thread goes here */
@@ -23,4 +25,13 @@ export function startServers () {
 
 export function killServers () {
   ipcRenderer.send('KILL_PROJECT')
+}
+
+export function checkIfServersStarted () {
+  return new Promise((res) => {
+    ipcRenderer.send(types.CHECK_SERVERS_STARTED)
+    ipcRenderer.on(types.CHECK_SERVERS_STARTED, (event, arg) => {
+      res(arg)
+    })
+  })
 }

@@ -9,14 +9,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
+  scrollContentContainer: {
+    flex: 1,
+  },
 })
 
 const App = () => (
   <View style={styles.container}>
-    <Header title="Title" leftIcon="menu" />
+    <Header title="Title" leftIcon="menu" rightIcon={null} />
     <ScrollView>
-      <Card content="Card Content" title="Card Title" />
-      <Card content="Card Content" title="Card Title" />
+      <Card title="Card Title" image={null} />
+      <Card title="Card Title" image={null} />
       <Text>Text View</Text>
     </ScrollView>
   </View>

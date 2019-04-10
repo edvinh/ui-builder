@@ -43,6 +43,13 @@ export default function projectReducer (state = initialState, action) {
         projectServersStarted: false,
       }
 
+    case types.CHECK_SERVERS_STARTED_SUCCESS: {
+      return {
+        ...state,
+        projectServersStarted: action.payload,
+      }
+    }
+
     default:
       return state
   }

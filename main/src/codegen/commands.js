@@ -68,8 +68,11 @@ const killProjects = () => {
   }
 }
 
+const projectsStarted = () => !!webProcess && !!nativeProcess
+
 module.exports = {
   writeCodeToFile,
   startProjects,
   killProjects,
+  projectsStarted,
 }

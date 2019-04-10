@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-
+const { killProjects } = require('./codegen/commands')
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -58,11 +58,18 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+  console.log('restart')
+  killProjects()
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('will-quit', () => {
+  killProjects()
 })
 
 app.on('activate', () => {

@@ -14,6 +14,7 @@ const components = [
     props: {
       title: 'Title',
       leftIcon: 'menu',
+      rightIcon: null,
     },
   },
   {
@@ -23,8 +24,8 @@ const components = [
     children: [],
     canHaveChildren: true,
     props: {
-      content: 'Card Content',
       title: 'Card Title',
+      image: null,
     },
   },
   {

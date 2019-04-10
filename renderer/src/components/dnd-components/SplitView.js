@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { getComponent } from '../../utils/componentMapper'
+import Item from '../dnd/Item'
 
 const Container = styled.div`
   position: relative;
@@ -27,29 +27,10 @@ const SplitView = ({ children, ...rest }) => {
   const firstChild = children[0]
   const secondChild = children[1]
 
-  let FirstComponent = null
-  let SecondComponent = null
-
-  if (firstChild) {
-    FirstComponent = getComponent(firstChild.name)
-  }
-
-  if (secondChild) {
-    SecondComponent = getComponent(secondChild.name)
-  }
-
   return (
     <Container {...rest}>
-      {FirstComponent ? (
-        <FirstComponent {...firstChild.props} children={{ ...firstChild.children }} />
-      ) : (
-        <EmptySlot />
-      )}
-      {SecondComponent ? (
-        <SecondComponent {...secondChild.props} children={{ ...secondChild.children }} />
-      ) : (
-        <EmptySlot />
-      )}
+      {firstChild ? <Item index={0} item={firstChild} key={`child-item-1`} /> : <EmptySlot />}
+      {secondChild ? <Item index={1} item={secondChild} key={`child-item-2`} /> : <EmptySlot />}
     </Container>
   )
 }

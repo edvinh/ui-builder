@@ -42,7 +42,7 @@ const CardComponent = ({
   title, children, image, ...rest
 }) => (
   <StyledCard {...rest}>
-    {image && (
+    {!!image && (
       <StyledImage
         source={{
           uri: image,
