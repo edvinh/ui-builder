@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components/native/dist/styled-components.native.cjs'
 
 const StyledCard = styled.View`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: auto;
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
@@ -32,7 +30,11 @@ const Content = styled.View`
 `
 
 const StyledImage = styled.Image`
-  height: 240px;
+  height: 220px;
+`
+
+const ImageWrapper = styled.View`
+  overflow: hidden;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 `
@@ -40,12 +42,15 @@ const StyledImage = styled.Image`
 const CardComponent = ({ title, children, image, ...rest }) => (
   <StyledCard {...rest}>
     {image && (
-      <StyledImage
-        source={{
-          uri: image,
-        }}
-        resizeMode="cover"
-      />
+      <ImageWrapper>
+        <StyledImage
+          source={{
+            uri: image,
+          }}
+          resizeMode="cover"
+          imageStyle={{ borderTopLeftRadius: 5 }}
+        />
+      </ImageWrapper>
     )}
     <Content>
       {title && <Title>{title}</Title>}
