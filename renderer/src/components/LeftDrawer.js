@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import {
-  IconButton,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
   ListSubheader,
-  Menu,
-  MenuItem,
   Button,
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import MoreIcon from '@material-ui/icons/MoreVert'
 import styled from 'styled-components'
 import { getComponents } from '../utils/componentMapper'
 import Drawer from './Drawer'

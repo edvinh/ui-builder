@@ -56,13 +56,15 @@ const calcViewport = (platform) => {
   }
 }
 
-const StyledPaper = styled(Paper)`
+const Container = styled.div`
+  display: flex;
+  margin: 32px auto 16px auto;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
   max-height: ${props => props.height}px;
-  /* overflow-y: scroll; */
-  overflow-x: hidden;
-  margin: 32px auto 16px auto;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 `
 
 class MainView extends Component {
@@ -142,7 +144,7 @@ class MainView extends Component {
     const { width, height } = calcViewport(platformView)
 
     return (
-      <StyledPaper width={width} height={height} id="rootView" onClick={this.onViewClick}>
+      <Container width={width} height={height} id="rootView" onClick={this.onViewClick}>
         <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart}>
           <ItemList droppableId="droppable">
             {layout.map((item, index) => (
@@ -150,7 +152,7 @@ class MainView extends Component {
             ))}
           </ItemList>
         </DragDropContext>
-      </StyledPaper>
+      </Container>
     )
   }
 }

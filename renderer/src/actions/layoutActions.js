@@ -16,9 +16,9 @@ export function addComponent (componentName) {
   }
 }
 
-export function removeComponent (componentId) {
+export function deleteComponent (componentId) {
   return {
-    type: types.REMOVE_COMPONENT,
+    type: types.DELETE_COMPONENT,
     payload: componentId,
   }
 }

@@ -35,10 +35,6 @@ const App = (props) => {
     }
   }
 
-  const updateComponent = (component) => {
-    props.updateComponent(component)
-  }
-
   return (
     <div>
       <StyledWrapper>
@@ -51,7 +47,8 @@ const App = (props) => {
         <MainView />
         <RightDrawer
           selectedComponent={props.selectedComponent}
-          updateComponent={updateComponent}
+          updateComponent={props.updateComponent}
+          deleteComponent={props.deleteComponent}
         />
       </StyledWrapper>
     </div>
@@ -71,7 +68,16 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({ ...projectActions, ...layoutActions }, dispatch)
 }
 
-App.propTypes = {}
+App.propTypes = {
+  selectedComponent: PropTypes.object.isRequired,
+  updateComponent: PropTypes.func.isRequired,
+  addComponent: PropTypes.func.isRequired,
+  deleteComponent: PropTypes.func.isRequired,
+  checkIfProjectServersStarted: PropTypes.func.isRequired,
+  generateCode: PropTypes.func.isRequired,
+  killServers: PropTypes.func.isRequired,
+  startServers: PropTypes.func.isRequired,
+}
 
 export default connect(
   mapStateToProps,

@@ -1,6 +1,7 @@
 import { default as _ } from 'lodash'
 import * as types from '../constants/types'
 import { getComponentData } from '../utils/componentMapper'
+import { findComponent, deleteComponent } from '../utils/util'
 
 const initialState = {
   layout: [
@@ -26,11 +27,13 @@ export default function projectReducer (state = initialState, action) {
     case types.ADD_COMPONENT:
       return { ...state, layout: [...state.layout, action.payload] }
 
-    case types.REMOVE_COMPONENT:
+    case types.DELETE_COMPONENT: {
+      const [newLayout] = deleteComponent(state.layout, action.payload)
       return {
         ...state,
-        layout: state.layout.filter(l => l.i !== action.payload),
+        layout: newLayout,
       }
+    }
 
     case types.REPLACE_LAYOUT: {
       return {

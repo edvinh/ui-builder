@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import TextField from '@material-ui/core/TextField'
+import {
+  List, ListItem, ListSubheader, TextField, Button,
+} from '@material-ui/core'
 import Drawer from './Drawer'
 
 const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1)
@@ -20,7 +19,7 @@ const renderPropsList = (props, handleChange) => Object.keys(props).map(key => (
   </ListItem>
 ))
 
-const RightDrawer = ({ selectedComponent, updateComponent }) => {
+const RightDrawer = ({ selectedComponent, updateComponent, deleteComponent }) => {
   if (!selectedComponent) {
     return <Drawer />
   }
@@ -39,6 +38,7 @@ const RightDrawer = ({ selectedComponent, updateComponent }) => {
   return (
     <Drawer>
       <List
+        style={{ height: '100%' }}
         component="nav"
         subheader={<ListSubheader component="div">Component Settings</ListSubheader>}
       >
@@ -65,6 +65,14 @@ const RightDrawer = ({ selectedComponent, updateComponent }) => {
           </ListItem>
         ))}
       </List>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => deleteComponent(selectedComponent.id)}
+        style={{ margin: '32px 12px' }}
+      >
+        Delete {selectedComponent.displayName}
+      </Button>
     </Drawer>
   )
 }
@@ -72,6 +80,7 @@ const RightDrawer = ({ selectedComponent, updateComponent }) => {
 RightDrawer.propTypes = {
   selectedComponent: PropTypes.object,
   updateComponent: PropTypes.func.isRequired,
+  deleteComponent: PropTypes.func.isRequired,
 }
 
 RightDrawer.defaultProps = {
