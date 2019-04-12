@@ -21,20 +21,6 @@ export function setProjectName (name) {
   }
 }
 
-export function addView (view) {
-  return {
-    type: types.ADD_VIEW,
-    payload: view,
-  }
-}
-
-export function deleteView (viewId) {
-  return {
-    type: types.DELETE_VIEW,
-    payload: viewId,
-  }
-}
-
 export function switchPlatformView (platformView) {
   return {
     type: types.SWITCH_PLATFORM_VIEW,

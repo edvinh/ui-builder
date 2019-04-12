@@ -15,8 +15,20 @@ const components = [
       title: 'Title',
       leftIcon: 'menu',
       rightIcon: null,
+      placement: 'center',
       backgroundColor: '#03A9F4',
       foregroundColor: 'white',
+    },
+    propTypes: {
+      title: 'string',
+      leftIcon: 'string',
+      rightIcon: 'string',
+      backgroundColor: 'string',
+      foregroundColor: 'string',
+      placement: {
+        type: 'string',
+        oneOf: ['center', 'left', 'right'],
+      },
     },
   },
   {
@@ -55,11 +67,11 @@ const components = [
       color: 'string',
       fontSize: 'string',
       textAlign: {
-        value: 'left',
+        type: 'string',
         oneOf: ['left', 'center', 'right', 'auto', 'justify'],
       },
       fontWeight: {
-        value: 'normal',
+        type: 'string',
         oneOf: ['normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'],
       },
     },
@@ -75,7 +87,7 @@ const components = [
       color: 'string',
       backgroundColor: 'string',
       type: {
-        value: 'solid',
+        type: 'string',
         oneOf: ['solid', 'outline', 'clear'],
       },
     },

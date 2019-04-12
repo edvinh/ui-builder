@@ -10,7 +10,7 @@ const Header = ({
     style: {
       color: foregroundColor,
       fontSize: 16,
-      fontWeight: 500,
+      fontWeight: '500',
     },
   }
 

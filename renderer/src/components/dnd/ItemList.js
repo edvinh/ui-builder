@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Droppable } from 'react-beautiful-dnd'
 
@@ -42,5 +43,9 @@ const ItemList = ({ children, ...rest }) => (
     )}
   </Droppable>
 )
+
+ItemList.propTypes = {
+  children: PropTypes.any,
+}
 
 export default ItemList

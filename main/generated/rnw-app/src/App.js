@@ -21,9 +21,10 @@ const App = () => (
     <Header
       title="Favourites"
       leftIcon="menu"
-      rightIcon="face"
-      backgroundColor="white"
-      foregroundColor="crimson"
+      rightIcon="image"
+      placement="center"
+      backgroundColor="darksalmon"
+      foregroundColor="white"
     />
     <ScrollView contentContainerStyle={styles.scrollContentContainer}>
       <Text color="crimson" fontSize="24" textAlign="left" fontWeight="bold">

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 const { ipcMain } = require('electron')
 
 const { writeCodeToFile, startProjects, killProjects, projectsStarted } = require('./commands')
@@ -17,17 +18,19 @@ ipcMain.on(GENERATE_CODE, (event, arg) => {
   const importsString = generateImports(layout)
   let componentsString = layout.map(component => generateComponent(component))
 
+  const scrollViewString = '<ScrollView contentContainerStyle={styles.scrollContentContainer}>'
+
   // If a header is present, wrap everything beneath it in a ScrollView
   if (layout[0].name === 'header') {
-    componentsString.splice(
-      1,
-      0,
-      '<ScrollView contentContainerStyle={styles.scrollContentContainer}>'
-    )
+    componentsString.splice(1, 0, scrollViewString)
+    componentsString.push('</ScrollView>')
+  } else {
+    // Otherwise, wrap everything in a ScrollView
+    componentsString = [scrollViewString, ...componentsString]
     componentsString.push('</ScrollView>')
   }
 
-  componentsString = componentsString.reduce((acc, curr) => `${acc}\n${curr}`)
+  componentsString = componentsString.join('\n')
 
   const wrapperString = wrapperTemplate(componentsString)
 
@@ -110,6 +113,5 @@ ipcMain.on(KILL_PROJECT, (event, arg) => {
 })
 
 ipcMain.on(CHECK_SERVERS_STARTED, (event, arg) => {
-  console.log('check', event)
   event.sender.send(CHECK_SERVERS_STARTED, projectsStarted())
 })

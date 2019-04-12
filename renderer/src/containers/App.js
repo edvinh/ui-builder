@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
@@ -77,6 +77,8 @@ App.propTypes = {
   generateCode: PropTypes.func.isRequired,
   killServers: PropTypes.func.isRequired,
   startServers: PropTypes.func.isRequired,
+  projectServersStarted: PropTypes.bool,
+  layout: PropTypes.array.isRequired,
 }
 
 export default connect(

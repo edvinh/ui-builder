@@ -1,3 +1,5 @@
+/* eslint-disable react/no-children-prop */
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -86,6 +88,8 @@ Item.propTypes = {
   index: PropTypes.number.isRequired,
   onItemClick: PropTypes.func,
   selectedComponent: PropTypes.object,
+  selectComponent: PropTypes.func,
+  isParentDragging: PropTypes.bool,
 }
 
 Item.defaultProps = {

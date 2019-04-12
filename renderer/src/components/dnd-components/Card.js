@@ -66,4 +66,11 @@ const CardComponent = ({
   </StyledCard>
 )
 
+CardComponent.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.any,
+  image: PropTypes.string,
+  isParentDragging: PropTypes.bool,
+}
+
 export default CardComponent

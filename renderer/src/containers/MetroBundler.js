@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { CircularProgress, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 
@@ -30,7 +30,7 @@ const LoadingWrapper = styled.div`
   z-index: 1;
 `
 
-const MetroBundler = (props) => {
+const MetroBundler = () => {
   const [loading, setLoading] = useState(true)
 
   return (
@@ -40,14 +40,10 @@ const MetroBundler = (props) => {
         <br />
         <br />
         <Typography variant="subtitle1">
-          Loading Metro Bundler... <br /> Make sure you've started the project.
+          Loading Metro Bundler... <br /> Make sure you&apos;ve started the project.
         </Typography>
       </LoadingWrapper>
-      <StyledIFrame
-        visible={!loading}
-        src="http://localhost:19002"
-        onLoad={e => setLoading(false)}
-      />
+      <StyledIFrame visible={!loading} src={SERVER_URL} onLoad={() => setLoading(false)} />
     </Wrapper>
   )
 }

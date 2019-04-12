@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* global window */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -33,6 +35,8 @@ const recursiveDelete = (items, id) => {
           item.children = item.children.filter(child => child.id !== id)
           return true
         }
+
+        return false
       })
   }
 
@@ -139,7 +143,7 @@ class MainView extends Component {
   }
 
   render () {
-    const { layout, platformView, selectedComponent } = this.props
+    const { layout, platformView } = this.props
     const { width, height } = calcViewport(platformView)
 
     return (

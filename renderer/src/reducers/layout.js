@@ -1,4 +1,4 @@
-import { default as _ } from 'lodash'
+import _ from 'lodash'
 import * as types from '../constants/types'
 import { getComponentData } from '../utils/componentMapper'
 import { findComponent, deleteComponent } from '../utils/util'
@@ -50,19 +50,7 @@ export default function projectReducer (state = initialState, action) {
 
     case types.UPDATE_COMPONENT: {
       const newLayout = _.cloneDeep(state.layout)
-      let component = newLayout.find(c => c.id === action.payload.id)
-
-      // Check component children if not in root
-      if (!component) {
-        newLayout.some((c) => {
-          component = c.children.find(child => child.id === action.payload.id)
-          return !!component
-        })
-
-        if (!component) {
-          return state
-        }
-      }
+      const component = findComponent(newLayout, action.payload.id)
 
       // If it was a prop change
       if (action.payload.changedProps) {
