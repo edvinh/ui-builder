@@ -54,10 +54,17 @@ const CardComponent = ({ title, children, image, ...rest }) => (
       </ImageWrapper>
     )}
     <Content>
-      {title && <Title>{title}</Title>}
+      {!!title && <Title>{title}</Title>}
       {children}
     </Content>
   </StyledCard>
 )
+
+CardComponent.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.any,
+  image: PropTypes.string,
+  isParentDragging: PropTypes.bool,
+}
 
 export default CardComponent

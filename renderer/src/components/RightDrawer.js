@@ -10,9 +10,16 @@ import {
   MenuItem,
   InputLabel,
   Typography,
+  OutlinedInput,
+  FormControl,
+  FormControlLabel,
+  Checkbox,
+  Switch,
 } from '@material-ui/core'
 import CodeIcon from '@material-ui/icons/Code'
 import Drawer from './Drawer'
+
+const emptyDrawerStyle = { alignItems: 'center', justifyContent: 'center', textAlign: 'center' }
 
 const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1)
 
@@ -27,7 +34,8 @@ const renderTextView = (key, value, handleChange) => (
     label={capitalize(key)}
     value={value || ''}
     onChange={handleChange(key)}
-    margin="normal"
+    margin="dense"
+    variant="outlined"
     fullWidth
   />
 )
@@ -40,16 +48,17 @@ const renderTextView = (key, value, handleChange) => (
  * @param {function} handleChange Function returning the corresponding onChange function.
  */
 const renderSelect = (key, value, values, handleChange) => (
-  <span style={{ width: '100%' }}>
-    <InputLabel htmlFor={key}>{capitalize(key)}</InputLabel>
+  <FormControl variant="outlined" style={{ width: '100%' }}>
+    <InputLabel style={{ backgroundColor: '#444', paddingRight: 4, borderRadius: 4 }} htmlFor={key}>
+      {capitalize(key)}
+    </InputLabel>
     <Select
       fullWidth
+      label={capitalize(key)}
       value={value}
       onChange={handleChange(key)}
-      inputProps={{
-        name: key,
-        id: key,
-      }}
+      input={<OutlinedInput margin="dense" labelWidth={10} name={key} id={key} />}
+      variant="outlined"
     >
       {values.map(item => (
         <MenuItem key={item} value={item}>
@@ -57,28 +66,64 @@ const renderSelect = (key, value, values, handleChange) => (
         </MenuItem>
       ))}
     </Select>
-  </span>
+  </FormControl>
+)
+
+const renderCheckbox = (key, value, handleChange) => (
+  <FormControlLabel
+    control={<Switch checked={value} onChange={handleChange(key, true)} />}
+    label={capitalize(key)}
+  />
 )
 
 const renderPropsList = (props, propTypes, handleChange) => {
-  // If we have no propTypes to go after, just render text views
+  // If we have no propTypes to go after, go after the typeof
   if (!propTypes) {
-    return Object.keys(props).map(key => (
-      <ListItem key={key}>{renderTextView(key, props[key], handleChange)}</ListItem>
-    ))
+    return Object.keys(props).map((key) => {
+      let renderedView = null
+
+      // Get the type
+      const type = typeof props[key]
+
+      // Render a text view if type is a string or a number
+      if (type === 'string' || type === 'number') {
+        renderedView = renderTextView(key, props[key], handleChange)
+      }
+
+      // Render a checkbox if type is boolean
+      if (type === 'boolean') {
+        renderedView = renderCheckbox(key, props[key], handleChange)
+      }
+
+      return <ListItem key={key}>{renderedView}</ListItem>
+    })
   }
 
   // If we have propTypes to go after, render the appropriate input view
-  return Object.keys(propTypes).map(key => (
-    <ListItem key={key}>
-      {propTypes[key] === 'string'
-        ? renderTextView(key, props[key], handleChange)
-        : renderSelect(key, props[key], propTypes[key].oneOf, handleChange)}
-    </ListItem>
-  ))
-}
+  return Object.keys(propTypes).map((key) => {
+    let renderedView = null
 
-const emptyDrawerStyle = { alignItems: 'center', justifyContent: 'center', textAlign: 'center' }
+    // Get the type
+    const type = propTypes[key]
+
+    // Render a text view if type is a string or a number
+    if (type === 'string' || type === 'number') {
+      renderedView = renderTextView(key, props[key], handleChange)
+    }
+
+    // Render a checkbox if type is boolean
+    if (type === 'boolean') {
+      renderedView = renderCheckbox(key, props[key], handleChange)
+    }
+
+    // If the type has a oneOf array, render a Select view
+    if (type.oneOf) {
+      renderedView = renderSelect(key, props[key], propTypes[key].oneOf, handleChange)
+    }
+
+    return <ListItem key={key}>{renderedView}</ListItem>
+  })
+}
 
 const RightDrawer = ({ selectedComponent, updateComponent, deleteComponent }) => {
   if (!selectedComponent) {
@@ -90,12 +135,13 @@ const RightDrawer = ({ selectedComponent, updateComponent, deleteComponent }) =>
     )
   }
 
-  const handleChange = prop => (event) => {
-    const newValue = { [prop]: event.target.value }
+  const handleChange = (prop, isCheckbox = false) => (event) => {
+    const value = isCheckbox ? event.target.checked : event.target.value
+    const newValue = { [prop]: value }
 
     // Special case if changing child, unique for Text Component
     if (prop === 'children') {
-      updateComponent({ id: selectedComponent.id, changedChildren: [event.target.value] })
+      updateComponent({ id: selectedComponent.id, changedChildren: [value] })
       return
     }
 
@@ -116,6 +162,8 @@ const RightDrawer = ({ selectedComponent, updateComponent, deleteComponent }) =>
               label="Text"
               value={selectedComponent.children[0] || ''}
               onChange={handleChange('children')}
+              margin="dense"
+              variant="outlined"
               fullWidth
               multiline
             />

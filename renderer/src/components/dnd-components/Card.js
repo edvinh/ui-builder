@@ -53,7 +53,7 @@ const CardComponent = ({
       />
     )}
     <Content>
-      {title && <Title>{title}</Title>}
+      {!!title && <Title>{title}</Title>}
       {children.map((child, index) => (
         <Item
           index={index}

@@ -1,8 +1,10 @@
 import Card from '../components/dnd-components/Card'
 import Header from '../components/dnd-components/Header'
 import SplitView from '../components/dnd-components/SplitView'
+import List from '../components/dnd-components/List'
 import Text from '../components/dnd-components/Text'
 import Button from '../components/dnd-components/Button'
+import Input from '../components/dnd-components/Input'
 
 const components = [
   {
@@ -96,6 +98,31 @@ const components = [
       color: 'white',
       backgroundColor: '#03A9F4',
       type: 'solid',
+    },
+  },
+
+  // {
+  //   displayName: 'List',
+  //   name: 'list',
+  //   component: List,
+  //   children: [],
+  //   canHaveChildren: true,
+  //   props: {
+  //     title: 'List Title',
+  //   },
+  // },
+  {
+    displayName: 'Input',
+    name: 'input',
+    component: Input,
+    children: [],
+    canHaveChildren: false,
+    props: {
+      placeholder: 'Placeholder',
+      leftIcon: null,
+      rightIcon: null,
+      label: 'Label',
+      password: false,
     },
   },
 ]

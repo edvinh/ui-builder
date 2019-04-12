@@ -59,12 +59,16 @@ const calcViewport = (platform) => {
   }
 }
 
+const maxContainerHeight = 768
+const maxContainerWidth = maxContainerHeight * 0.5625
+
 const Container = styled.div`
   display: flex;
   margin: 32px auto 16px auto;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
-  max-height: ${props => props.height}px;
+  max-height: ${maxContainerHeight}px;
+  max-width: ${maxContainerWidth}px;
   overflow-y: auto;
   border-radius: 4px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);

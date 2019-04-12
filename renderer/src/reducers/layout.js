@@ -17,6 +17,10 @@ const initialState = {
       id: 'card2',
       ...getComponentData('card'),
     },
+    {
+      id: 'input1',
+      ...getComponentData('input'),
+    },
   ],
   rootBackground: '#999',
   selectedComponent: null,

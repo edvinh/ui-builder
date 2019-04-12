@@ -1,8 +1,9 @@
+const genericTemplateGenerator = component => props => `<${component} ${props} />`
+
 const headerTemplate = props => `<Header ${props} />`
 const cardTemplate = (props, children) => `<Card ${props}>${children}</Card>`
 const textTemplate = (props, text) => `<Text ${props}>${text}</Text>`
 const buttonTemplate = props => `<Button ${props} />`
-
 const wrapperTemplate = children => `
 const styles = StyleSheet.create({
   container: {
@@ -30,10 +31,11 @@ import { View, ScrollView, StyleSheet } from 'react-native'
 
 const getTemplate = componentName => {
   const templates = {
-    header: headerTemplate,
+    header: genericTemplateGenerator('Header'),
     card: cardTemplate,
     text: textTemplate,
-    button: buttonTemplate,
+    button: genericTemplateGenerator('Button'),
+    input: genericTemplateGenerator('Input'),
   }
 
   return templates[componentName]
