@@ -15,6 +15,8 @@ const components = [
       title: 'Title',
       leftIcon: 'menu',
       rightIcon: null,
+      backgroundColor: '#03A9F4',
+      foregroundColor: 'white',
     },
   },
   {
@@ -28,21 +30,39 @@ const components = [
       image: null,
     },
   },
-  {
-    displayName: 'Split View',
-    name: 'splitview',
-    component: SplitView,
-    children: [],
-    canHaveChildren: true,
-    props: {},
-  },
+
+  // {
+  //   displayName: 'Split View',
+  //   name: 'splitview',
+  //   component: SplitView,
+  //   children: [],
+  //   canHaveChildren: true,
+  //   props: {},
+  // },
   {
     displayName: 'Text',
     name: 'text',
     component: Text,
     children: ['Text View'],
     canHaveChildren: false,
-    props: {},
+    props: {
+      color: '#222',
+      fontSize: 12,
+      textAlign: 'left',
+      fontWeight: 'normal',
+    },
+    propTypes: {
+      color: 'string',
+      fontSize: 'string',
+      textAlign: {
+        value: 'left',
+        oneOf: ['left', 'center', 'right', 'auto', 'justify'],
+      },
+      fontWeight: {
+        value: 'normal',
+        oneOf: ['normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'],
+      },
+    },
   },
   {
     displayName: 'Button',
@@ -50,7 +70,21 @@ const components = [
     component: Button,
     children: [],
     canHaveChildren: false,
-    props: { title: 'Button' },
+    propTypes: {
+      title: 'string',
+      color: 'string',
+      backgroundColor: 'string',
+      type: {
+        value: 'solid',
+        oneOf: ['solid', 'outline', 'clear'],
+      },
+    },
+    props: {
+      title: 'Button',
+      color: 'white',
+      backgroundColor: '#03A9F4',
+      type: 'solid',
+    },
   },
 ]
 
@@ -60,7 +94,7 @@ export function getComponents () {
 
 export function getComponentData (componentName) {
   const {
-    displayName, name, props, canHaveChildren, children,
+    displayName, name, props, propTypes, canHaveChildren, children,
   } = components.find(
     component => component.name === componentName
   )
@@ -69,6 +103,7 @@ export function getComponentData (componentName) {
     name,
     props: { ...props },
     children: [...children],
+    propTypes,
     canHaveChildren,
   }
 }

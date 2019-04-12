@@ -26,6 +26,8 @@ const Title = styled.Text`
   font-size: 18px;
   font-weight: bold;
   color: #222;
+  padding-left: 4px;
+  padding-right: 4px;
 `
 
 const Content = styled.View`
@@ -33,13 +35,13 @@ const Content = styled.View`
 `
 
 const StyledImage = styled.Image`
-  height: 240px;
+  height: 220px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 `
 
 const CardComponent = ({
-  title, children, image, ...rest
+  title, children, image, isParentDragging, ...rest
 }) => (
   <StyledCard {...rest}>
     {!!image && (
@@ -53,7 +55,12 @@ const CardComponent = ({
     <Content>
       {title && <Title>{title}</Title>}
       {children.map((child, index) => (
-        <Item index={index} item={child} key={`child-item-${index}`} />
+        <Item
+          index={index}
+          item={child}
+          key={`child-item-${index}`}
+          isParentDragging={isParentDragging}
+        />
       ))}
     </Content>
   </StyledCard>

@@ -7,7 +7,7 @@ const List = styled.div`
   padding: 2px;
   width: 100%;
   overflow-y: auto;
-
+  transition: all 150ms ease-in-out;
   /* Custom scrollbar */
   &::-webkit-scrollbar {
     width: 12px;

@@ -51,13 +51,12 @@ function generateImports (components) {
   components
     .map(c => c.children)
     .forEach(children => {
-      const deps = children.map(child => child.name)
+      const deps = children.filter(child => typeof child !== 'string').map(child => child.name)
       childDeps = [...childDeps, ...deps]
     })
 
   // Remove duplicates & capitalize and use in import template string
   names = [...names, ...childDeps]
-  console.log(names)
   names = names
     .filter((v, i) => names.indexOf(v) === i)
     .map(name => name.charAt(0).toUpperCase() + name.slice(1))

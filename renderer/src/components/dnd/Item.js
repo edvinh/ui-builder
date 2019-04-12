@@ -15,11 +15,17 @@ const Container = styled.div`
   background-color: ${props => (props.isDragDisabled ? 'lightgrey' : props.isDragging ? 'lightgreen' : 'transparent')};
   border-radius: 5px;
   border: ${props => (props.focused ? 2 : 0)}px dashed rgba(0, 0, 0, 0.25);
-  padding: ${props => (props.focused ? 1 : 0)}px;
+  padding: 1px;
 `
 
 const Item = ({
-  index, item, onItemClick, selectedComponent, selectComponent, ...rest
+  index,
+  item,
+  onItemClick,
+  selectedComponent,
+  selectComponent,
+  isParentDragging,
+  ...rest
 }) => {
   const Component = getComponent(item.name)
   const focused = selectedComponent ? item.id === selectedComponent.id : false
@@ -34,19 +40,43 @@ const Item = ({
 
   return (
     <Draggable key={item.id} draggableId={item.id} index={index} {...rest}>
-      {(provided, snapshot) => (
-        <Container
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          isDragging={snapshot.isDragging}
-          onClick={onClick}
-          focused={focused}
-        >
-          <Component {...item.props} children={item.children} />
-          {provided.placeholder}
-        </Container>
-      )}
+      {(provided, snapshot) => {
+        // Remove transform if parent component is in dragging state
+        const draggableProps = isParentDragging
+          ? {
+            ...provided.draggableProps,
+            style: { ...provided.draggableProps.style, transform: 'none' },
+          }
+          : provided.draggableProps
+
+        // Disables animation on drop
+        // if (snapshot.isDropAnimating) {
+        //   draggableProps.style = { ...draggableProps.style, transitionDuration: `1ms` }
+        // }
+
+        const dragHandleProps = isParentDragging ? {} : provided.dragHandleProps
+
+        return (
+          <Container
+            ref={provided.innerRef}
+            {...draggableProps}
+            {...dragHandleProps}
+            isDragging={snapshot.isDragging}
+            onClick={onClick}
+            focused={focused}
+          >
+            <Component
+              {...item.props}
+              children={item.children}
+              isParentDragging={
+                (item.children.length > 0 && (snapshot.isDragging || snapshot.isDropAnimating))
+                || isParentDragging
+              }
+            />
+            {provided.placeholder}
+          </Container>
+        )
+      }}
     </Draggable>
   )
 }

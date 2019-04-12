@@ -23,6 +23,8 @@ const Title = styled.Text`
   font-size: 18px;
   font-weight: bold;
   color: #222;
+  padding-left: 4px;
+  padding-right: 4px;
 `
 
 const Content = styled.View`
@@ -48,7 +50,6 @@ const CardComponent = ({ title, children, image, ...rest }) => (
             uri: image,
           }}
           resizeMode="cover"
-          imageStyle={{ borderTopLeftRadius: 5 }}
         />
       </ImageWrapper>
     )}
