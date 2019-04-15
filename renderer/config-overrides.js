@@ -11,5 +11,6 @@ module.exports = override(
     path.resolve('node_modules/react-native-elements'),
     path.resolve('node_modules/react-native-vector-icons'),
     path.resolve('node_modules/react-native-ratings'),
+    path.resolve('node_modules/react-native-paper'),
   ])
 )

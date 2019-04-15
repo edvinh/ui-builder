@@ -2,6 +2,7 @@
   "name": "renderer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
@@ -16,6 +17,7 @@
     "react-grid-layout": "^0.16.6",
     "react-native": "^0.59.4",
     "react-native-elements": "^1.1.0",
+    "react-native-paper": "^2.15.2",
     "react-native-vector-icons": "^6.4.2",
     "react-native-web": "^0.11.2",
     "react-redux": "^7.0.1",

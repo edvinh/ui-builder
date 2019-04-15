@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-  BrowserRouter, Route, Switch, withRouter,
-} from 'react-router-dom'
+import { BrowserRouter, Route, withRouter } from 'react-router-dom'
 import { CssBaseline, MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import App from './App'
 import MetroBundler from './MetroBundler'

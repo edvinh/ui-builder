@@ -1,7 +1,6 @@
+import Checkbox from '../components/dnd-components/Checkbox'
 import Card from '../components/dnd-components/Card'
 import Header from '../components/dnd-components/Header'
-import SplitView from '../components/dnd-components/SplitView'
-import List from '../components/dnd-components/List'
 import Text from '../components/dnd-components/Text'
 import Button from '../components/dnd-components/Button'
 import Input from '../components/dnd-components/Input'
@@ -16,9 +15,9 @@ const components = [
     props: {
       title: 'Title',
       leftIcon: 'menu',
-      rightIcon: null,
+      rightIcon: 'more-vert',
       placement: 'center',
-      backgroundColor: '#03A9F4',
+      backgroundColor: '#6200ee',
       foregroundColor: 'white',
     },
     propTypes: {
@@ -41,18 +40,9 @@ const components = [
     canHaveChildren: true,
     props: {
       title: 'Card Title',
-      image: null,
+      image: '',
     },
   },
-
-  // {
-  //   displayName: 'Split View',
-  //   name: 'splitview',
-  //   component: SplitView,
-  //   children: [],
-  //   canHaveChildren: true,
-  //   props: {},
-  // },
   {
     displayName: 'Text',
     name: 'text',
@@ -84,33 +74,22 @@ const components = [
     component: Button,
     children: [],
     canHaveChildren: false,
-    propTypes: {
-      title: 'string',
-      color: 'string',
-      backgroundColor: 'string',
-      type: {
-        type: 'string',
-        oneOf: ['solid', 'outline', 'clear'],
-      },
-    },
     props: {
       title: 'Button',
-      color: 'white',
-      backgroundColor: '#03A9F4',
-      type: 'solid',
+      color: '#6200ee',
+      icon: null,
+      type: 'contained',
+    },
+    propTypes: {
+      title: 'string',
+      icon: 'string',
+      color: 'string',
+      type: {
+        type: 'string',
+        oneOf: ['text', 'outlined', 'contained'],
+      },
     },
   },
-
-  // {
-  //   displayName: 'List',
-  //   name: 'list',
-  //   component: List,
-  //   children: [],
-  //   canHaveChildren: true,
-  //   props: {
-  //     title: 'List Title',
-  //   },
-  // },
   {
     displayName: 'Input',
     name: 'input',
@@ -119,10 +98,38 @@ const components = [
     canHaveChildren: false,
     props: {
       placeholder: 'Placeholder',
-      leftIcon: null,
-      rightIcon: null,
+      mode: 'outlined',
       label: 'Label',
       password: false,
+    },
+    propTypes: {
+      label: 'string',
+      placeholder: 'string',
+      mode: {
+        type: 'string',
+        oneOf: ['outlined', 'flat'],
+      },
+      password: 'boolean',
+    },
+  },
+  {
+    displayName: 'Checkbox',
+    name: 'checkbox',
+    component: Checkbox,
+    children: [],
+    canHaveChildren: false,
+    props: {
+      label: 'Label',
+      align: 'flex-start',
+      checked: false,
+    },
+    propTypes: {
+      label: 'string',
+      align: {
+        type: 'string',
+        oneOf: ['flex-start', 'center', 'flex-end'],
+      },
+      checked: 'boolean',
     },
   },
 ]

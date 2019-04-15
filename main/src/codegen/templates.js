@@ -31,11 +31,12 @@ import { View, ScrollView, StyleSheet } from 'react-native'
 
 const getTemplate = componentName => {
   const templates = {
-    header: genericTemplateGenerator('Header'),
     card: cardTemplate,
     text: textTemplate,
+    header: genericTemplateGenerator('Header'),
     button: genericTemplateGenerator('Button'),
     input: genericTemplateGenerator('Input'),
+    checkbox: genericTemplateGenerator('Checkbox'),
   }
 
   return templates[componentName]

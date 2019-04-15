@@ -1,48 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Input as RNEInput } from 'react-native-elements'
+import { TextInput } from 'react-native-paper'
+import styled from 'styled-components/native/dist/styled-components.native.cjs'
 
-const inputContainerStyle = {
-  borderWidth: 1,
-  borderColor: '#777',
-  borderRadius: 4,
-}
-
-const inputStyle = { paddingLeft: 8 }
-
-const labelStyle = { fontSize: 16, paddingBottom: 4 }
-
-const containerStyle = { marginVertical: 8, paddingHorizontal: 4 }
+const Wrapper = styled.View`
+  padding-top: 8px;
+  padding-bottom: 8px;
+`
 
 const Input = ({
   placeholder,
   label,
-  leftIcon,
-  rightIcon,
   password,
+  multiline,
+  onChange,
   children, // eslint-disable-line react/prop-types
   ...rest
 }) => (
-  <RNEInput
-    inputContainerStyle={inputContainerStyle}
-    inputStyle={inputStyle}
-    labelStyle={labelStyle}
-    placeholder={placeholder}
-    containerStyle={containerStyle}
-    label={label}
-    secureTextEntry={password}
-    leftIcon={leftIcon ? { name: leftIcon } : null}
-    rightIcon={rightIcon ? { name: rightIcon } : null}
-    {...rest}
-  />
+  <Wrapper>
+    <TextInput
+      label={label}
+      mode="outlined"
+      placeholder={placeholder}
+      secureTextEntry={password}
+      multiline={multiline}
+      onChangeText={onChange}
+      {...rest}
+    />
+  </Wrapper>
 )
 
 Input.propTypes = {
   placeholder: PropTypes.string,
   label: PropTypes.string,
   password: PropTypes.bool,
-  leftIcon: PropTypes.string,
-  rightIcon: PropTypes.string,
+  multiline: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 export default Input

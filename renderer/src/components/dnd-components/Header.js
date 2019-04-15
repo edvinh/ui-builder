@@ -1,42 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header as RNEHeader } from 'react-native-elements'
+import { Appbar } from 'react-native-paper'
+import ErrorBoundary from './ErrorBoundary'
 
 const Header = ({
-  leftIcon, rightIcon, title, backgroundColor, foregroundColor, ...rest
-}) => {
-  const textStyle = {
-    text: title,
-    style: {
-      color: foregroundColor,
-      fontSize: 16,
-      fontWeight: '500',
-    },
-  }
-
-  const leftIconStyle = {
-    icon: leftIcon,
-    color: foregroundColor,
-  }
-
-  const rightIconStyle = {
-    icon: rightIcon,
-    color: foregroundColor,
-  }
-
-  return (
-    <RNEHeader
-      backgroundColor={backgroundColor}
-      leftComponent={leftIcon ? leftIconStyle : null}
-      centerComponent={textStyle}
-      rightComponent={rightIcon ? rightIconStyle : null}
-      {...rest}
-    />
-  )
-}
+  leftIcon,
+  rightIcon,
+  title,
+  subtitle,
+  backgroundColor,
+  foregroundColor,
+  ...rest
+}) => (
+  <ErrorBoundary>
+    <Appbar.Header style={{ backgroundColor }} {...rest}>
+      {!!leftIcon && <Appbar.Action icon={leftIcon} color={foregroundColor} />}
+      <Appbar.Content title={title || null} subtitle={subtitle || null} color={foregroundColor} />
+      {!!rightIcon && <Appbar.Action icon={rightIcon} color={foregroundColor} />}
+    </Appbar.Header>
+  </ErrorBoundary>
+)
 
 Header.propTypes = {
   title: PropTypes.string,
+  subtitle: PropTypes.string,
   leftIcon: PropTypes.string,
   rightIcon: PropTypes.string,
   backgroundColor: PropTypes.string,
@@ -45,6 +32,7 @@ Header.propTypes = {
 
 Header.defaultProps = {
   title: '',
+  subtitle: '',
   leftIcon: '',
   rightIcon: '',
   backgroundColor: '03A9F4',
