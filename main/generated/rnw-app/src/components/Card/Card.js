@@ -43,7 +43,7 @@ const ImageWrapper = styled.View`
 
 const CardComponent = ({ title, children, image, ...rest }) => (
   <StyledCard {...rest}>
-    {image && (
+    {!!image && (
       <ImageWrapper>
         <StyledImage
           source={{

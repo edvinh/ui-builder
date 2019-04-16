@@ -77,34 +77,13 @@ const renderCheckbox = (key, value, handleChange) => (
 )
 
 const renderPropsList = (props, propTypes, handleChange) => {
-  // If we have no propTypes to go after, go after the typeof
-  if (!propTypes) {
-    return Object.keys(props).map((key) => {
-      let renderedView = null
+  const selectedPropObject = propTypes || props
 
-      // Get the type
-      const type = typeof props[key]
-
-      // Render a text view if type is a string or a number
-      if (type === 'string' || type === 'number') {
-        renderedView = renderTextView(key, props[key], handleChange)
-      }
-
-      // Render a checkbox if type is boolean
-      if (type === 'boolean') {
-        renderedView = renderCheckbox(key, props[key], handleChange)
-      }
-
-      return <ListItem key={key}>{renderedView}</ListItem>
-    })
-  }
-
-  // If we have propTypes to go after, render the appropriate input view
-  return Object.keys(propTypes).map((key) => {
+  return Object.keys(selectedPropObject).map((key) => {
     let renderedView = null
 
-    // Get the type
-    const type = propTypes[key]
+    // If we have no propTypes to go after, go after the typeof of the prop
+    const type = propTypes ? propTypes[key] : typeof props[key]
 
     // Render a text view if type is a string or a number
     if (type === 'string' || type === 'number') {
