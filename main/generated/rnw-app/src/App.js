@@ -2,8 +2,9 @@ import React from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
 
 import Header from './components/Header/'
-import Card from './components/Card/'
 import Input from './components/Input/'
+import Button from './components/Button/'
+import Checkbox from './components/Checkbox/'
 
 const styles = StyleSheet.create({
   container: {
@@ -18,17 +19,18 @@ const styles = StyleSheet.create({
 const App = () => (
   <View style={styles.container}>
     <Header
-      title="Title"
+      title="Log in"
       leftIcon="menu"
-      rightIcon="more-vert"
+      rightIcon=""
       placement="center"
-      backgroundColor="#6200ee"
-      foregroundColor="white"
+      backgroundColor="white"
+      foregroundColor="green"
     />
     <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-      <Card title="Card Title" image="" />
-      <Card title="Card Title" image="" />
-      <Input placeholder="Placeholder" mode="outlined" label="Label" password={false} />
+      <Input placeholder="email@example.com" mode="outlined" label="Email" password={false} />
+      <Input placeholder="Placeholder" mode="outlined" label="Password" password={true} />
+      <Button title="Log in" color="#6200ee" type="contained" />
+      <Checkbox label="Remember me" align="center" checked={true} />
     </ScrollView>
   </View>
 )

@@ -4,10 +4,11 @@ import { Button as RNPButton } from 'react-native-paper'
 import ErrorBoundary from './ErrorBoundary'
 
 const Button = ({
-  title, icon, type, color, contentStyle, onPress, ...rest
+  title, icon, type, color, style, contentStyle, onPress, ...rest
 }) => (
   <ErrorBoundary>
     <RNPButton
+      style={{ marginTop: 12, marginBottom: 12, ...style }}
       contentStyle={{ height: 48, ...contentStyle }}
       icon={icon}
       mode={type}
@@ -27,12 +28,14 @@ Button.propTypes = {
   icon: PropTypes.string,
   onPress: PropTypes.func,
   contentStyle: PropTypes.object,
+  style: PropTypes.object,
 }
 
 Button.defaultProps = {
   type: 'solid',
   color: 'white',
   contentStyle: {},
+  style: {},
   onPress: () => {},
 }
 
