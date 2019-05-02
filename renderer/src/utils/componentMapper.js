@@ -14,6 +14,7 @@ const components = [
     canHaveChildren: false,
     props: {
       title: 'Title',
+      subtitle: null,
       leftIcon: 'menu',
       rightIcon: 'more-vert',
       placement: 'center',
@@ -22,6 +23,7 @@ const components = [
     },
     propTypes: {
       title: 'string',
+      subtitle: 'string',
       leftIcon: 'string',
       rightIcon: 'string',
       backgroundColor: 'string',
