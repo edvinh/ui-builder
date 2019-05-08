@@ -35,7 +35,7 @@ Header.defaultProps = {
   subtitle: '',
   leftIcon: '',
   rightIcon: '',
-  backgroundColor: '03A9F4',
+  backgroundColor: '#03A9F4',
   foregroundColor: 'white',
 }
 
