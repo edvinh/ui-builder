@@ -21,6 +21,7 @@ const Input = ({
   <Wrapper>
     <TextInput
       label={label}
+      accessibilityLabel={label}
       mode="outlined"
       placeholder={placeholder}
       secureTextEntry={password}

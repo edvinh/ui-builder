@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Checkbox as RNCheckbox } from 'react-native-paper'
 import styled from 'styled-components'
 import { Platform, TouchableOpacity, Text } from 'react-native'
+import MUICheckbox from '@material-ui/core/Checkbox'
 
 const isWeb = Platform.OS === 'web'
 
@@ -25,8 +26,15 @@ const Checkbox = ({ checked, align, label, onPress, ...rest }) => {
   let Label = ({ onPress, onClick, ...rest }) => <StyledLabel onPress={onPress} {...rest} />
 
   if (isWeb) {
+    return (
+      <Label align={align}>
+        <LabelText>{label}</LabelText>
+        <MUICheckbox checked={checked} onChange={onPress} />
+      </Label>
+    )
+
     // eslint-disable-next-line
-    Label = ({ onPress, onClick, ...rest }) => <StyledLabel onClick={onPress} {...rest} />
+    // Label = ({ onPress, onClick, ...rest }) => <StyledLabel onClick={onPress} {...rest} />
   }
 
   return (

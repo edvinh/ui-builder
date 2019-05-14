@@ -28,6 +28,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "cross-env": "^5.2.0",
     "customize-cra": "^0.2.12",
     "expo": "^32.0.6",
