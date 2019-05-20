@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   List,
   ListItem,
@@ -8,7 +8,9 @@ import {
   Button,
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import GenerateIcon from '@material-ui/icons/Autorenew'
 import styled from 'styled-components'
+import Tooltip from '@material-ui/core/Tooltip'
 import { getComponents } from '../utils/componentMapper'
 import Drawer from './Drawer'
 
@@ -21,13 +23,11 @@ const StyledListSubheader = styled(ListSubheader)`
   padding: 4px;
 `
 
-const LeftDrawer = ({
-  toggleProjectServers,
-  addComponent,
-  generateCode,
-  projectServersStarted,
-}) => (
-  <Drawer anchor="left">
+const LeftDrawer = ({ addComponent, generateCode }) => (
+  <Drawer
+    anchor="left"
+    style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+  >
     <List
       component="nav"
       subheader={<StyledListSubheader component="span">Component Library</StyledListSubheader>}
@@ -35,27 +35,22 @@ const LeftDrawer = ({
       {componentTypes.map((type, i) => (
         <ListItem button onClick={() => addComponent(type.name)} key={`${type.name}-${i}`}>
           <ListItemText primary={type.displayName} />
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
+          <Tooltip title={`Click to add ${type.name}`}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+          </Tooltip>
         </ListItem>
       ))}
     </List>
     <Button
       variant="contained"
       color="secondary"
-      style={{ margin: '32px 8px' }}
+      size="large"
+      style={{ borderRadius: 0, paddingTop: 16, paddingBottom: 16 }}
       onClick={generateCode}
     >
-      Generate Code
-    </Button>
-    <Button
-      variant="contained"
-      color="secondary"
-      style={{ margin: '16px 8px' }}
-      onClick={toggleProjectServers}
-    >
-      {projectServersStarted ? 'Stop Project' : 'Launch Project'}
+      <GenerateIcon /> &nbsp; Generate Code
     </Button>
   </Drawer>
 )

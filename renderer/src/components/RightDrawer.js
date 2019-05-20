@@ -13,10 +13,10 @@ import {
   OutlinedInput,
   FormControl,
   FormControlLabel,
-  Checkbox,
   Switch,
 } from '@material-ui/core'
 import CodeIcon from '@material-ui/icons/Code'
+import DeleteIcon from '@material-ui/icons/DeleteForever'
 import Drawer from './Drawer'
 
 const emptyDrawerStyle = { alignItems: 'center', justifyContent: 'center', textAlign: 'center' }
@@ -161,9 +161,9 @@ const RightDrawer = ({ selectedComponent, updateComponent, deleteComponent }) =>
         variant="contained"
         color="secondary"
         onClick={() => deleteComponent(selectedComponent.id)}
-        style={{ margin: '32px 12px' }}
+        style={{ margin: '12px 12px' }}
       >
-        Delete {selectedComponent.displayName}
+        <DeleteIcon /> &nbsp; Delete {selectedComponent.displayName}
       </Button>
     </Drawer>
   )
