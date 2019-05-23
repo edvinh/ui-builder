@@ -2,8 +2,9 @@ import React from 'react'
 import { View, ScrollView, StyleSheet } from 'react-native'
 
 import Header from './components/Header/'
+import Text from './components/Text/'
 import Card from './components/Card/'
-import Input from './components/Input/'
+import Button from './components/Button/'
 
 const styles = StyleSheet.create({
   container: {
@@ -18,17 +19,21 @@ const styles = StyleSheet.create({
 const App = () => (
   <View style={styles.container}>
     <Header
-      title="Title"
+      title="Favourites"
       leftIcon="menu"
-      rightIcon="more-vert"
+      rightIcon="image"
       placement="center"
-      backgroundColor="#6200ee"
+      backgroundColor="darksalmon"
       foregroundColor="white"
     />
     <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-      <Card title="Card Title" image="" />
-      <Card title="Card Title" image="" />
-      <Input placeholder="Placeholder" mode="outlined" label="Label" password={false} />
+      <Text color="crimson" fontSize="24" textAlign="left" fontWeight="bold">
+        Favourite Pictures
+      </Text>
+      <Card title="Trees" image="https://picsum.photos/200/300" />
+      <Card title="Plants" image="https://picsum.photos/200/300" />
+      <Card title="Flowers" image="https://picsum.photos/200/300" />
+      <Button title="See More" color="crimson" icon="" type="outlined" />
     </ScrollView>
   </View>
 )

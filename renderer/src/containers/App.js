@@ -27,23 +27,10 @@ const App = (props) => {
     props.generateCode(props.layout)
   }
 
-  const toggleProjectServers = () => {
-    if (props.projectServersStarted) {
-      props.killServers()
-    } else {
-      props.startServers()
-    }
-  }
-
   return (
     <div>
       <StyledWrapper>
-        <LeftDrawer
-          generateCode={generateCode}
-          toggleProjectServers={toggleProjectServers}
-          addComponent={addComponent}
-          projectServersStarted={props.projectServersStarted}
-        />
+        <LeftDrawer generateCode={generateCode} addComponent={addComponent} />
         <MainView />
         <RightDrawer
           selectedComponent={props.selectedComponent}
