@@ -1,110 +1,71 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ListSubheader,
-  Menu,
-  MenuItem,
-} from '@material-ui/core'
-import FolderIcon from '@material-ui/icons/Folder'
-import ViewIcon from '@material-ui/icons/ViewCompact'
-import MoreIcon from '@material-ui/icons/MoreVert'
 import styled from 'styled-components'
 import * as projectActions from '../actions/projectActions'
+import * as layoutActions from '../actions/layoutActions'
+import LeftDrawer from '../components/LeftDrawer'
+import MainView from '../components/MainView'
+import RightDrawer from '../components/RightDrawer'
 
-const StyledDrawer = styled(props => <Drawer {...props} classes={{ paper: 'paper' }} />)`
-  & .paper {
-    width: 20%;
-    min-width: 200px;
-    max-width: 350px;
-    top: 50px; /* hack: AppBar height */
-  }
-`
-
-const StyledListSubheader = styled(ListSubheader)`
+const StyledWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-right: -12px;
-  padding: 4px;
+  width: 100%;
 `
 
 const App = (props) => {
-  const [selectedListItem, setSelectedListItem] = useState(0)
-  const [openMenu, setOpenMenu] = useState({ anchorEl: null, open: false })
+  useEffect(() => {
+    props.checkIfProjectServersStarted()
+  }, [])
 
-  const addView = () => {
-    props.addView({
-      type: 'view',
-    })
+  const addComponent = (type) => {
+    props.addComponent(type)
   }
 
-  const addFolder = () => {
-    props.addView({
-      type: 'folder',
-    })
+  const generateCode = () => {
+    props.generateCode(props.layout)
   }
 
   return (
     <div>
-      <StyledDrawer variant="persistent" anchor="left" open>
-        <Menu
-          onClose={() => setOpenMenu({ anchorEl: null, open: false })}
-          anchorEl={openMenu.anchorEl}
-          open={openMenu.open}
-        >
-          <MenuItem onClick={addFolder}>Add Folder</MenuItem>
-          <MenuItem onClick={addView}>Add View</MenuItem>
-        </Menu>
-        <List
-          component="nav"
-          subheader={
-            <StyledListSubheader component="div">
-              Views
-              <IconButton onClick={evt => setOpenMenu({ anchorEl: evt.currentTarget, open: true })}>
-                <MoreIcon />
-              </IconButton>
-            </StyledListSubheader>
-          }
-        >
-          {props.views.map(view => (
-            <ListItem
-              key={`l-${view.id}`}
-              button
-              selected={selectedListItem === view.id}
-              onClick={() => setSelectedListItem(view.id)}
-            >
-              <ListItemIcon>{view.type === 'view' ? <ViewIcon /> : <FolderIcon />}</ListItemIcon>
-              <ListItemText primary={view.name} />
-            </ListItem>
-          ))}
-        </List>
-      </StyledDrawer>
+      <StyledWrapper>
+        <LeftDrawer generateCode={generateCode} addComponent={addComponent} />
+        <MainView />
+        <RightDrawer
+          selectedComponent={props.selectedComponent}
+          updateComponent={props.updateComponent}
+          deleteComponent={props.deleteComponent}
+        />
+      </StyledWrapper>
     </div>
   )
 }
 
 function mapStateToProps (state) {
   return {
-    views: state.project.views,
     projectName: state.project.name,
+    layout: state.layout.layout,
+    projectServersStarted: state.project.projectServersStarted,
+    selectedComponent: state.layout.selectedComponent,
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ ...projectActions }, dispatch)
+  return bindActionCreators({ ...projectActions, ...layoutActions }, dispatch)
 }
 
 App.propTypes = {
-  views: PropTypes.array.isRequired,
-  addView: PropTypes.func.isRequired,
+  selectedComponent: PropTypes.object.isRequired,
+  updateComponent: PropTypes.func.isRequired,
+  addComponent: PropTypes.func.isRequired,
+  deleteComponent: PropTypes.func.isRequired,
+  checkIfProjectServersStarted: PropTypes.func.isRequired,
+  generateCode: PropTypes.func.isRequired,
+  killServers: PropTypes.func.isRequired,
+  startServers: PropTypes.func.isRequired,
+  projectServersStarted: PropTypes.bool,
+  layout: PropTypes.array.isRequired,
 }
 
 export default connect(

@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-
+const { killProjects } = require('./codegen/commands')
 const {
   default: installExtension,
   REACT_DEVELOPER_TOOLS,
@@ -16,8 +16,8 @@ let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1420,
-    height: 950,
+    width: 1430,
+    height: 1070,
     transparent: false,
     webPreferences: {
       nodeIntegration: true,
@@ -27,17 +27,14 @@ function createWindow () {
 
   if (PRODUCTION) {
     // Load build for prod
-    // win.loadURL(`file://${path.join(__dirname, '../../renderer/build/index.html')}`)
+    win.loadURL(`file://${path.join(__dirname, '../../renderer/build/index.html')}`)
   } else {
     // Load React
     win.loadURL('http://localhost:3000')
+
+    // Open the DevTools.
+    win.webContents.openDevTools()
   }
-
-  // and load the index.html of the app.
-  // win.loadFile('index.html')
-
-  // Open the DevTools.
-  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -46,6 +43,9 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  // Init API
+  require('./codegen')
 }
 
 // This method will be called when Electron has finished
@@ -55,11 +55,18 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+  console.log('restart')
+  killProjects()
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('will-quit', () => {
+  killProjects()
 })
 
 app.on('activate', () => {

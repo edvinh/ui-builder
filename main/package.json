@@ -6,12 +6,17 @@
   "license": "MIT",
   "scripts": {
     "electron": "electron src",
-    "start": "cross-env NODE_ENV=dev nodemon --watch ./src/**/* --watch . --exec 'yarn electron'"
+    "start": "cross-env NODE_ENV=dev nodemon --ignore ./generated --watch ./src/**/* --watch . --exec 'yarn electron'"
   },
   "devDependencies": {
+    "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "electron": "^4.0.6",
     "electron-devtools-installer": "^2.2.4",
     "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "prettier": "^1.16.4",
+    "ps-tree": "^1.2.0"
   }
 }

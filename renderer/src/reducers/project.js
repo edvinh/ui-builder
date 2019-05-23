@@ -3,6 +3,7 @@ import * as types from '../constants/types'
 const initialState = {
   name: 'Untitled',
   views: [],
+  platformView: 'mobile',
 }
 
 export default function projectReducer (state = initialState, action) {
@@ -13,16 +14,28 @@ export default function projectReducer (state = initialState, action) {
     case types.SET_PROJECT_NAME:
       return { ...state, name: action.payload.name }
 
-    case types.ADD_VIEW: {
-      const view = action.payload
-      view.id = state.views.length
-      view.name = view.name || `View ${view.id}`
-      return { ...state, views: [...state.views, view] }
-    }
+    case types.SWITCH_PLATFORM_VIEW:
+      return {
+        ...state,
+        platformView: action.payload,
+      }
+    case types.START_SERVERS:
+      return {
+        ...state,
+        projectServersStarted: true,
+      }
 
-    case types.DELETE_VIEW: {
-      const newViews = state.views.filter(v => v.id === action.payload)
-      return { ...state, views: newViews }
+    case types.KILL_SERVERS:
+      return {
+        ...state,
+        projectServersStarted: false,
+      }
+
+    case types.CHECK_SERVERS_STARTED_SUCCESS: {
+      return {
+        ...state,
+        projectServersStarted: action.payload,
+      }
     }
 
     default:
